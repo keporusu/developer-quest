@@ -1,7 +1,15 @@
-# This .gitignore file should be placed at the root of your Unity project directory
-#
-# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
-#
+# Created by https://www.gitignore.io/api/unity
+# Edit at https://www.gitignore.io/?templates=unity
+
+# Jetbrain Rider Cache
+.idea/
+Assets/Plugins/Editor/JetBrains*
+
+# Visual Studio Code
+.vscode/
+
+
+### Unity ###
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -9,6 +17,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+Assets/AssetStoreTools*
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -52,7 +61,7 @@ ExportedObj/
 *.pdb.meta
 *.mdb.meta
 
-# Unity3D generated file on crash reports
+# Unity3D Generated File On Crash Reports
 sysinfo.txt
 
 # Builds
@@ -60,6 +69,7 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*.obb
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -70,3 +80,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# End of https://www.gitignore.io/api/unity
