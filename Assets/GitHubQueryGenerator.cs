@@ -42,12 +42,3 @@ public class NewBehaviourScript : MonoBehaviour
 }
 
 
-public class GitHubQueryResponse
-{
-    public Viewer Viewer { get; set; }
-}
-
-public class Viewer
-{
-    public string Login { get; set; }
-}
