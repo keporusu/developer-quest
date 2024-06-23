@@ -9,7 +9,7 @@ public class UserAction : MonoBehaviour
     [SerializeField] private Button _contributionQueryButton;
     void Start()
     {
-        var dataHolder = new DataHolder();
+        var dataHolder = new ContributionDataHolder();
         
         _loginQueryButton.onClick.AddListener(() =>
         {

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DataHolder
+/// <summary>
+/// データがある場所
+/// </summary>
+public class ContributionDataHolder
 {
 
     private readonly GitHubService _gitHubService;
@@ -15,13 +19,19 @@ public class DataHolder
     private int _totalContributions;
     private ContributionData _contributionData;
     
+    //private ContributionData _allContributionData;
+    
     
     //初期化: 
-    public  DataHolder()
+    public  ContributionDataHolder()
     {
-        _gitHubService = new GitHubService(); 
+        _gitHubService = new GitHubService();
+        
     }
     
+    /// <summary>
+    /// とりあえず、ゲーム起動時はこれを実行すること
+    /// </summary>
     public async void Login()
     {
         _userName = await _gitHubService.SendLoginQuery();
@@ -40,7 +50,29 @@ public class DataHolder
         //Debug.Log(_contributionData.TotalContributions);
         //Debug.Log(_contributionData.ContributionCalendar);
     }
-    
-    
+
+    public int GetTotalContributions()
+    {
+        return _totalContributions;
+    }
+
+    public ContributionData GetContributionData()
+    {
+        return _contributionData;
+    }
+
+    public int GetContributionFromDate(string day)
+    {
+        var count=(_contributionData.ContributionCalendar.FirstOrDefault(dayInfo => dayInfo.Day == day)).Count;
+        if (count == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return count;
+        }
+    }
+
 
 }
