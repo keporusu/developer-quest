@@ -20,7 +20,7 @@ public class NewBehaviourScript : MonoBehaviour
     [CanBeNull] private string _userName;
     [CanBeNull] private string _from = "";
     
-    private string _apiKey = "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";
+    private string _apiKey = System.Environment.GetEnvironmentVariable("GITHUB_APIKEY_FOR_UNITY");//"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";
     void Start()
     {
         _loginQueryButton.onClick.AddListener(() =>
