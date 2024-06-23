@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UserAction : MonoBehaviour
+{
+    [SerializeField] private Button _loginQueryButton;
+    [SerializeField] private Button _contributionQueryButton;
+    void Start()
+    {
+        var dataHolder = new DataHolder();
+        
+        _loginQueryButton.onClick.AddListener(() =>
+        {
+            dataHolder.Login();
+        });
+        _contributionQueryButton.onClick.AddListener(() =>
+        {
+            dataHolder.GetContribution(7);
+        });
+    }
+}

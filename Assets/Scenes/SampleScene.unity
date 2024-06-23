@@ -1099,8 +1099,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 882639832}
-  - component: {fileID: 882639833}
   - component: {fileID: 882639834}
+  - component: {fileID: 882639835}
   m_Layer: 0
   m_Name: User
   m_TagString: Untagged
@@ -1124,20 +1124,6 @@ Transform:
   - {fileID: 1964846651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &882639833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 882639831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf08ffac4c4ad44cb990eda4f975fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _queryButton: {fileID: 1339899884}
-  _queryInputField: {fileID: 164419262}
 --- !u!114 &882639834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1150,10 +1136,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b1d5171bc01a248b2279098d382394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loginQueryButton: {fileID: 875025583}
-  _contributionQueryButton: {fileID: 30066067}
   _loginQueryInputField: {fileID: 1662567783}
   _contributionQueryInputField: {fileID: 797624983}
+--- !u!114 &882639835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882639831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01efaa24deac6664aafa6eaee5e8f9d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loginQueryButton: {fileID: 875025583}
+  _contributionQueryButton: {fileID: 30066067}
 --- !u!1 &1313255918
 GameObject:
   m_ObjectHideFlags: 0

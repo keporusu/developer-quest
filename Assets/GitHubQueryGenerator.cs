@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using GraphQL;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,29 +13,19 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-public class NewBehaviourScript : MonoBehaviour
+public class GitHubService : MonoBehaviour
 {
-    [SerializeField] private Button _loginQueryButton;
-    [SerializeField] private Button _contributionQueryButton;
+    
     [SerializeField] private Text _loginQueryInputField;
     [SerializeField] private Text _contributionQueryInputField;
     [CanBeNull] private string _userName;
     [CanBeNull] private string _from = "";
     
     private string _apiKey = System.Environment.GetEnvironmentVariable("GITHUB_APIKEY_FOR_UNITY");//"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";
-    void Start()
-    {
-        _loginQueryButton.onClick.AddListener(() =>
-        {
-            _sendLoginQuery();
-        });
-        _contributionQueryButton.onClick.AddListener(() =>
-        {
-            _sendContributionsQuery();
-        });
-    }
-
-    private async void _sendLoginQuery()
+    
+    
+    //ログイン用クエリ送信
+    public async Task<string> SendLoginQuery()
     {
         GraphQLHttpClient graphQLClient = new GraphQLHttpClient($"https://api.github.com/graphql", new NewtonsoftJsonSerializer());
         graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiKey);
@@ -49,9 +41,13 @@ public class NewBehaviourScript : MonoBehaviour
         Debug.Log($"[Query] {JsonConvert.SerializeObject(response.Data)}");
 
         _userName = response.Data.Viewer.Login;
+
+        return _userName;
     }
     
-    private async void _sendContributionsQuery()
+    
+    //草取得用クエリ送信
+    public async Task<ContributionData> SendContributionsQuery(string userName, int need)
     {
         GraphQLHttpClient graphQLClient = new GraphQLHttpClient($"https://api.github.com/graphql", new NewtonsoftJsonSerializer());
         graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiKey);
@@ -59,7 +55,7 @@ public class NewBehaviourScript : MonoBehaviour
         //graphQLClient.Options.MediaType = "application/json";
         
         var variables = new {
-            userName = _userName,
+            userName = userName,
         };
 
         GraphQLRequest query = new GraphQLRequest
@@ -71,6 +67,25 @@ public class NewBehaviourScript : MonoBehaviour
         var response = await graphQLClient.SendQueryAsync<ContributionInfo>(query, CancellationToken.None);
 
         Debug.Log($"[Query] {JsonConvert.SerializeObject(response.Data)}");
+
+
+        var contributionCalendar = response.Data.User.ContributionsCollection.ContributionCalendar;
+        var counts = contributionCalendar.TotalContributions;
+        var calender = contributionCalendar.Weeks;
+        
+        //need分だけとる
+        List<DayContribution> dayContributions = new List<DayContribution>();
+        foreach (var week in calender.Reverse())
+        {
+            foreach (var day in week.ContributionDays.Reverse())
+            {
+                dayContributions.Add(new DayContribution(day.Date,day.ContributionCount));
+                need--;
+                if (need == 0) break;
+            }
+            if (need == 0) break;
+        }
+        return new ContributionData(counts, dayContributions);
     }
 }
 
