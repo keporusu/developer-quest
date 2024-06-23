@@ -13,15 +13,10 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-public class GitHubService : MonoBehaviour
+public class GitHubService
 {
-    
-    [SerializeField] private Text _loginQueryInputField;
-    [SerializeField] private Text _contributionQueryInputField;
-    [CanBeNull] private string _userName;
-    [CanBeNull] private string _from = "";
-    
-    private string _apiKey = System.Environment.GetEnvironmentVariable("GITHUB_APIKEY_FOR_UNITY");//"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";
+
+    private string _apiKey = System.Environment.GetEnvironmentVariable("GITHUB_APIKEY_FOR_UNITY");
     
     
     //ログイン用クエリ送信
@@ -33,17 +28,16 @@ public class GitHubService : MonoBehaviour
 
         GraphQLRequest query = new GraphQLRequest
         {
-            Query = _loginQueryInputField.text,
+            Query = "query {    viewer {      login    }  }"//_loginQueryInputField.text
         };
 
         var response = await graphQLClient.SendQueryAsync<GitHubQueryResponse>(query, CancellationToken.None);
         
         Debug.Log($"[Query] {JsonConvert.SerializeObject(response.Data)}");
 
-        _userName = response.Data.Viewer.Login;
-
-        return _userName;
+        return response.Data.Viewer.Login;
     }
+    
     
     
     //草取得用クエリ送信
@@ -51,16 +45,14 @@ public class GitHubService : MonoBehaviour
     {
         GraphQLHttpClient graphQLClient = new GraphQLHttpClient($"https://api.github.com/graphql", new NewtonsoftJsonSerializer());
         graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiKey);
-        
-        //graphQLClient.Options.MediaType = "application/json";
-        
+
         var variables = new {
             userName = userName,
         };
 
         GraphQLRequest query = new GraphQLRequest
         {
-            Query = _contributionQueryInputField.text,
+            Query = "query($userName: String!) {   user(login: $userName) {     contributionsCollection {       contributionCalendar {         totalContributions         weeks {           contributionDays {             contributionCount             date           }         }       }     }   } }",//_contributionQueryInputField.text,
             Variables = variables
         };
 

@@ -17,7 +17,7 @@ public class UserAction : MonoBehaviour
         });
         _contributionQueryButton.onClick.AddListener(() =>
         {
-            dataHolder.GetContribution(7);
+            dataHolder.RequestContributions(7);
         });
     }
 }
