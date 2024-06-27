@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ContributionData
+public class ContributionsData
 {
-    public ContributionData(int totalContributions, List<DayContribution> contributionCalendar)
+    public ContributionsData(int totalContributions, List<DayContribution> contributionCalendar)
     {
         TotalContributions = totalContributions;
         ContributionCalendar = contributionCalendar;

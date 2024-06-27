@@ -17,7 +17,7 @@ public class ContributionDataHolder
     private string _userName;
     
     private int _totalContributions;
-    private ContributionData _contributionData;
+    private ContributionsData _contributionsData;
     
     //private ContributionData _allContributionData;
     
@@ -40,30 +40,43 @@ public class ContributionDataHolder
 
     
     /// <summary>
-    /// 必要な分だけのContributionを得られる。初回は全部でいいんじゃないか
+    /// 必要な分だけのContributionを確保する。初回は全部でいいんじゃないか
     /// </summary>
     /// <param name="need">放置した日数+1を入れよう（何も入れないとすべて取得する）</param>
     public async void RequestContributions(int need=-1)
     {
-        Task<ContributionData> contributionCalendar = _gitHubService.SendContributionsQuery(_userName, need);
-        _contributionData = await contributionCalendar;
+        Task<ContributionsData> contributionCalendar = _gitHubService.SendContributionsQuery(_userName, need);
+        _contributionsData = await contributionCalendar;
         //Debug.Log(_contributionData.TotalContributions);
         //Debug.Log(_contributionData.ContributionCalendar);
     }
-
+    
+    /// <summary>
+    /// 今までのContribution数を取得
+    /// </summary>
+    /// <returns></returns>
     public int GetTotalContributions()
     {
         return _totalContributions;
     }
 
-    public ContributionData GetContributionData()
+    /// <summary>
+    /// 取得済みのContributionを返す
+    /// </summary>
+    /// <returns></returns>
+    public ContributionsData GetContributionData()
     {
-        return _contributionData;
+        return _contributionsData;
     }
-
+    
+    /// <summary>
+    /// 日にちを渡して、その日のContributionを返す
+    /// </summary>
+    /// <param name="day"></param>
+    /// <returns></returns>
     public int GetContributionFromDate(string day)
     {
-        var count=(_contributionData.ContributionCalendar.FirstOrDefault(dayInfo => dayInfo.Day == day)).Count;
+        int count=(_contributionsData.ContributionCalendar.FirstOrDefault(dayInfo => dayInfo.Day == day)).Count;
         if (count == null)
         {
             return 0;

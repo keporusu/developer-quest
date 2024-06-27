@@ -41,7 +41,7 @@ public class GitHubService
     
     
     //草取得用クエリ送信
-    public async Task<ContributionData> SendContributionsQuery(string userName, int need)
+    public async Task<ContributionsData> SendContributionsQuery(string userName, int need)
     {
         GraphQLHttpClient graphQLClient = new GraphQLHttpClient($"https://api.github.com/graphql", new NewtonsoftJsonSerializer());
         graphQLClient.HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiKey);
@@ -77,7 +77,7 @@ public class GitHubService
             }
             if (need == 0) break;
         }
-        return new ContributionData(counts, dayContributions);
+        return new ContributionsData(counts, dayContributions);
     }
 }
 
