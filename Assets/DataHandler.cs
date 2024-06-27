@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataHandler
@@ -8,6 +9,7 @@ public class DataHandler
     private ContributionDataHolder _contributionDataHolder;
     private string _today;
     private List<DayContribution> _requiredContributions; //変更がある分のContribution
+    private int _totalContributions;
     
     public DataHandler()
     {
@@ -24,8 +26,8 @@ public class DataHandler
         _contributionDataHolder.Login();
         if(isFirst)_contributionDataHolder.RequestContributions();
         else _contributionDataHolder.RequestContributions(7);
-        
-        //TODO _requiredContributionを作成する
+        _totalContributions = _contributionDataHolder.GetTotalContributions();
+        //TODO _requiredContributionを作成する 以前のデータをロードして、今のデータと比較して、今のデータを保存する
     }
     
     /// <summary>
@@ -56,9 +58,19 @@ public class DataHandler
     }
 
     
-    void Save()
+    
+    /// <summary>
+    /// ここでは、DayContributionsを引数として与えること。
+    /// そっちのほうが直観的。
+    /// </summary>
+    /// <param name="dayContributions"></param>
+    private void _save(IEnumerable<DayContribution> dayContributions)
     {
-        
+        ContributionsDataRepository.Save(new ContributionsData(_totalContributions,dayContributions.ToList()));
+    }
+    private ContributionsData _load()
+    {
+        return ContributionsDataRepository.Load();
     }
     
     

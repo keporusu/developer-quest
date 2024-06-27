@@ -7,14 +7,14 @@ public class ContributionsDataRepository
 {
     private const string SAVE_FILE_NAME = "contributions_data.json";
 
-    public static void SaveContributionsData(ContributionsData data)
+    public static void Save(ContributionsData data)
     {
         string json = JsonConvert.SerializeObject(data);
         string path = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         File.WriteAllText(path, json);
     }
 
-    public static ContributionsData LoadContributionsData()
+    public static ContributionsData Load()
     {
         string path = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         if (File.Exists(path))
@@ -25,7 +25,7 @@ public class ContributionsDataRepository
         return null;
     }
 
-    public static void ResetContributionsData()
+    public static void Reset()
     {
         string path = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
         if (File.Exists(path))
