@@ -32,7 +32,7 @@ public class ContributionDataHolder
     /// <summary>
     /// とりあえず、ゲーム起動時はこれを実行すること
     /// </summary>
-    public async void Login()
+    public async Task Login()
     {
         _userName = await _gitHubService.SendLoginQuery();
         //ebug.Log(_userName.ToString());
@@ -45,8 +45,7 @@ public class ContributionDataHolder
     /// <param name="need">放置した日数+1を入れよう（何も入れないとすべて取得する）</param>
     public async void RequestContributions(int need=-1)
     {
-        Task<ContributionsData> contributionCalendar = _gitHubService.SendContributionsQuery(_userName, need);
-        _contributionsData = await contributionCalendar;
+        _contributionsData = await _gitHubService.SendContributionsQuery(_userName, need);
     }
     
     /// <summary>
@@ -55,7 +54,7 @@ public class ContributionDataHolder
     /// <returns></returns>
     public int GetTotalContributions()
     {
-        return _totalContributions;
+        return _contributionsData.TotalContributions;
     }
 
     /// <summary>
@@ -88,7 +87,7 @@ public class ContributionDataHolder
     
     
     //デバッグ用
-    public ContributionsData GetContributionDebug(string endDay)
+    public ContributionsData GetContributionsDebug(string endDay)
     {
         var list = new List<DayContribution>();
         var count = 0;
@@ -107,7 +106,9 @@ public class ContributionDataHolder
             }
         }
 
-        return new ContributionsData(count, list);
+        var newData = new ContributionsData(count, list);
+        ContributionsDataRepository.Save(newData);
+        return newData;
     }
 
 

@@ -16,31 +16,29 @@ public class DataHandler
     
     public DataHandler()
     {
-        var _contributionDataHolder = new ContributionDataHolder();
-        var _today = DateTime.Today.ToString("yyyy-MM-dd");
+        _contributionDataHolder = new ContributionDataHolder();
+        _today = DateTime.Today.ToString("yyyy-MM-dd");
     }
     
     /// <summary>
     /// ログイン時に実行
     /// </summary>
     /// <param name="isFirst">初回起動なら</param>
-    public void Login()
+    public async void Login()
     {
-        _contributionDataHolder.Login();
+        await _contributionDataHolder.Login();
+        _contributionDataHolder.RequestContributions(30);
     }
     
     /// <summary>
     /// 初期化と同時に呼び出す
     /// </summary>
     /// <param name="isFirst"></param>
-    public void Init(bool isFirst=false)
+    public void PullData()
     {
-        if(isFirst)_contributionDataHolder.RequestContributions();
-        else _contributionDataHolder.RequestContributions(7);
         _totalContributionsCount = _contributionDataHolder.GetTotalContributions();
         
-        
-        //TODO _requiredContributionを作成する 以前のデータをロードして、今のデータと比較して、今のデータを保存する
+        //_requiredContributionを作成する 以前のデータをロードして、今のデータと比較して、今のデータを保存する
 
         var prevContributionsData = _load(); //前回までの記録をすべてロード
         _previousContributions = prevContributionsData.ContributionCalendar;
@@ -125,8 +123,15 @@ public class DataHandler
             requiredContributions.Add(dayContribution);
         }
 
-        return latestContributions;
+        return requiredContributions;
     }
-    
+
+
+
+
+    public ContributionsData GetContributionsDebug(string endDay)
+    {
+        return _contributionDataHolder.GetContributionsDebug(endDay);
+    }
     
 }
