@@ -47,8 +47,6 @@ public class ContributionDataHolder
     {
         Task<ContributionsData> contributionCalendar = _gitHubService.SendContributionsQuery(_userName, need);
         _contributionsData = await contributionCalendar;
-        //Debug.Log(_contributionData.TotalContributions);
-        //Debug.Log(_contributionData.ContributionCalendar);
     }
     
     /// <summary>

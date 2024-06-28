@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataHandler
@@ -9,11 +10,13 @@ public class DataHandler
     private ContributionDataHolder _contributionDataHolder;
     private string _today;
     private List<DayContribution> _requiredContributions; //変更がある分のContribution
-    private int _totalContributions;
+    private List<DayContribution> _previousContributions; //前回までのContribution
+    //private List<DayContribution> _latestContributions; //最新のContribution
+    private int _totalContributionsCount;
     
     public DataHandler()
     {
-        var _contributionDataHolder= new ContributionDataHolder();
+        var _contributionDataHolder = new ContributionDataHolder();
         var _today = DateTime.Today.ToString("yyyy-MM-dd");
     }
     
@@ -26,8 +29,13 @@ public class DataHandler
         _contributionDataHolder.Login();
         if(isFirst)_contributionDataHolder.RequestContributions();
         else _contributionDataHolder.RequestContributions(7);
-        _totalContributions = _contributionDataHolder.GetTotalContributions();
+        _totalContributionsCount = _contributionDataHolder.GetTotalContributions();
+        
         //TODO _requiredContributionを作成する 以前のデータをロードして、今のデータと比較して、今のデータを保存する
+
+        var prevContributionsData = ContributionsDataRepository.Load(); //前回までの記録をすべてロード
+        _previousContributions = prevContributionsData.ContributionCalendar;
+        _requiredContributions = _makeRequiredContributions();
     }
     
     /// <summary>
@@ -52,13 +60,23 @@ public class DataHandler
     /// 起動していない日数分のContributionを得る
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<DayContribution> GetNeedContributions()
+    public IEnumerable<DayContribution> GetRequiredContributions()
     {
         return _requiredContributions;
     }
 
-    
-    
+    /// <summary>
+    /// 前回までのContributionのうち、必要な分だけとってくる
+    /// </summary>
+    /// <param name="need"></param>
+    /// <returns></returns>
+    public IEnumerable<DayContribution> GetPreviousContributions(int need)
+    {
+        return _previousContributions.Take(need);
+    }
+
+
+
     /// <summary>
     /// ここでは、DayContributionsを引数として与えること。
     /// そっちのほうが直観的。
@@ -66,11 +84,38 @@ public class DataHandler
     /// <param name="dayContributions"></param>
     private void _save(IEnumerable<DayContribution> dayContributions)
     {
-        ContributionsDataRepository.Save(new ContributionsData(_totalContributions,dayContributions.ToList()));
+        ContributionsDataRepository.Save(new ContributionsData(_totalContributionsCount,dayContributions.ToList()));
     }
     private ContributionsData _load()
     {
         return ContributionsDataRepository.Load();
+    }
+
+    
+    /// <summary>
+    /// 起動してない日数分のContributionwoとる
+    /// </summary>
+    /// <returns></returns>
+    private List<DayContribution> _makeRequiredContributions()
+    {
+        var latestContributions = _contributionDataHolder.GetContributionData().ContributionCalendar;
+        List<DayContribution> requiredContributions=new List<DayContribution>();
+
+        var lastContribution = _previousContributions.First(); //
+        foreach (var dayContribution in latestContributions)
+        {
+            if (dayContribution.Day == lastContribution.Day)
+            {
+                if (dayContribution.Count != lastContribution.Count)
+                {
+                    requiredContributions.Add(dayContribution);
+                }
+                break;
+            }
+            requiredContributions.Add(dayContribution);
+        }
+
+        return latestContributions;
     }
     
     
