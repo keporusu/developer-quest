@@ -24,18 +24,28 @@ public class DataHandler
     /// ログイン時に実行
     /// </summary>
     /// <param name="isFirst">初回起動なら</param>
-    public void Login(bool isFirst=false)
+    public void Login()
     {
         _contributionDataHolder.Login();
+    }
+    
+    /// <summary>
+    /// 初期化と同時に呼び出す
+    /// </summary>
+    /// <param name="isFirst"></param>
+    public void Init(bool isFirst=false)
+    {
         if(isFirst)_contributionDataHolder.RequestContributions();
         else _contributionDataHolder.RequestContributions(7);
         _totalContributionsCount = _contributionDataHolder.GetTotalContributions();
         
+        
         //TODO _requiredContributionを作成する 以前のデータをロードして、今のデータと比較して、今のデータを保存する
 
-        var prevContributionsData = ContributionsDataRepository.Load(); //前回までの記録をすべてロード
+        var prevContributionsData = _load(); //前回までの記録をすべてロード
         _previousContributions = prevContributionsData.ContributionCalendar;
         _requiredContributions = _makeRequiredContributions();
+        _save(_requiredContributions);
     }
     
     /// <summary>

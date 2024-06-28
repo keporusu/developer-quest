@@ -84,6 +84,31 @@ public class ContributionDataHolder
             return count;
         }
     }
+    
+    
+    
+    //デバッグ用
+    public ContributionsData GetContributionDebug(string endDay)
+    {
+        var list = new List<DayContribution>();
+        var count = 0;
+        var flag = false;
+        foreach (var x in _contributionsData.ContributionCalendar)
+        {
+            if (!flag && x.Day == endDay)
+            {
+                flag = true;
+            }
+
+            if (flag)
+            {
+                list.Add(x);
+                count += x.Count;
+            }
+        }
+
+        return new ContributionsData(count, list);
+    }
 
 
 }
