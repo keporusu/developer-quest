@@ -22,10 +22,13 @@ public class LoadAction : MonoBehaviour
             dataHandler.GetContributionsDebug("2024-06-22");
         });
         
-        _contributionQueryButton.onClick.AddListener(() =>
+        _contributionQueryButton.onClick.AddListener(async () =>
         {
             dataHandler.PullData();
-            //dataHandler.Get
+            var x = dataHandler.GetPreviousContributions(7);
+            var z = dataHandler.GetTodayContributionsCount();
+            var w = dataHandler.IsTodayContributionsChange();
+            var y = dataHandler.GetRequiredContributions();
         });
     }
 }
