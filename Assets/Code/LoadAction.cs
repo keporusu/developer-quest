@@ -19,7 +19,7 @@ public class LoadAction : MonoBehaviour
         
         _createDataButton.onClick.AddListener(() =>
         {
-            dataHandler.GetContributionsDebug("2024-06-22");
+            dataHandler.GetContributionsDebug("2024-07-22");
         });
         
         _contributionQueryButton.onClick.AddListener(async () =>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,11 +88,21 @@ public class ContributionDataHolder
     
     
     //デバッグ用
+    /// <summary>
+    /// デバッグ用
+    /// </summary>
+    /// <param name="endDay">どこからの記録が欲しいか。引っ張ってきたデータより以前の日にちを入れても、引っ張て来たデータ分しかとれない</param>
+    /// <returns></returns>
     public ContributionsData GetContributionsDebug(string endDay)
     {
         var list = new List<DayContribution>();
         var count = 0;
         var flag = false;
+
+        var dataTime1 = DateTime.ParseExact(endDay, "yyyy-MM-dd", null);
+        var dataTime2 = DateTime.ParseExact(_contributionsData.ContributionCalendar.Last().Day, "yyyy-MM-dd", null);
+        if ((dataTime1 - dataTime2).Days < 0) flag = true;
+        
         foreach (var x in _contributionsData.ContributionCalendar)
         {
             if (!flag && x.Day == endDay)

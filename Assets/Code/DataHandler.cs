@@ -109,11 +109,13 @@ public class DataHandler
         var latestContributions = _contributionDataHolder.GetContributionData().ContributionCalendar;
         List<DayContribution> requiredContributions=new List<DayContribution>();
 
-        var lastContribution = _previousContributions.First(); //
+        var lastContribution = _previousContributions.First(); 
+        
         foreach (var dayContribution in latestContributions)
         {
             if (dayContribution.Day == lastContribution.Day)
             {
+                //最後の日からContribution数が変わっていたらその日も追加
                 if (dayContribution.Count != lastContribution.Count)
                 {
                     requiredContributions.Add(dayContribution);
