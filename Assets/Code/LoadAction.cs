@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class LoadAction : MonoBehaviour
     void Start()
     {
         var dataHandler = new DataHandler();
+        var uiController = GameObject.Find("UI").GetComponent<UIController>();
         
         _loginQueryButton.onClick.AddListener(() =>
         {
@@ -25,10 +27,14 @@ public class LoadAction : MonoBehaviour
         _contributionQueryButton.onClick.AddListener(async () =>
         {
             dataHandler.PullData();
-            var x = dataHandler.GetPreviousContributions(7);
-            var z = dataHandler.GetTodayContributionsCount();
+            var previous = dataHandler.GetPreviousContributions().ToList();
+            var todayContribution = dataHandler.GetTodayContributionsCount();
             var w = dataHandler.IsTodayContributionsChange();
-            var y = dataHandler.GetRequiredContributions();
+            var totalContributions = dataHandler.GetTotalContributionsCount();
+            var required = dataHandler.GetRequiredContributions().ToList();
+            uiController.GenerateContributionPopUp(todayContribution,totalContributions, previous, required);
         });
     }
+
+    
 }

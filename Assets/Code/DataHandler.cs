@@ -63,6 +63,11 @@ public class DataHandler
     {
         return _requiredContributions.Count != 0;
     }
+
+    public int GetTotalContributionsCount()
+    {
+        return _totalContributionsCount;
+    }
     
     /// <summary>
     /// 起動していない日数分のContributionを得る
@@ -78,9 +83,10 @@ public class DataHandler
     /// </summary>
     /// <param name="need"></param>
     /// <returns></returns>
-    public IEnumerable<DayContribution> GetPreviousContributions(int need)
+    public IEnumerable<DayContribution> GetPreviousContributions(int? need = null)
     {
-        return _previousContributions.Take(need);
+        if (!need.HasValue) return _previousContributions;
+        return _previousContributions.Take(need.Value);
     }
 
 
