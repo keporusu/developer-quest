@@ -63,9 +63,10 @@ public class ContributionPopUpView : MonoBehaviour
     
     private IEnumerable<Image> GetDirectChildrenImages()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        var parent = _contributionsCalander.transform;
+        for (int i = 0; i < parent.childCount; i++)
         {
-            Image image = transform.GetChild(i).GetComponent<Image>();
+            Image image = parent.GetChild(i).GetComponent<Image>();
             if (image != null)
             {
                 yield return image;
