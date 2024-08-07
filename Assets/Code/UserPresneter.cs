@@ -11,7 +11,7 @@ public class UserPresneter : MonoBehaviour
     
     void Start()
     {
-        if (_useDummy) _userModel = new UserModel(24, 120, 25600);
+        if (_useDummy) _userModel = new UserModel(20, 120, 25600);
         else _userModel = new UserModel(UserRepository.LoadContributionPoint(), UserRepository.LoadLevel(),
             UserRepository.LoadExperience());
         

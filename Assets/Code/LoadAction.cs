@@ -13,6 +13,7 @@ public class LoadAction : MonoBehaviour
     {
         var dataHandler = new DataHandler();
         var uiController = GameObject.Find("UI").GetComponent<UIController>();
+        var userPresenter = GameObject.Find("UserPresenter").GetComponent<UserPresneter>();
         
         _loginQueryButton.onClick.AddListener(() =>
         {
@@ -33,6 +34,9 @@ public class LoadAction : MonoBehaviour
             var totalContributions = dataHandler.GetTotalContributionsCount();
             var required = dataHandler.GetRequiredContributions().ToList();
             uiController.GenerateContributionPopUp(todayContribution,totalContributions, previous, required);
+            
+            //TODO: ここのtodayContributionは差分にする（IsTodayContributionsChangeを int TodayContributionsChangeにすればよさげ）
+            userPresenter.AddContributionPoint(todayContribution);
         });
     }
 
