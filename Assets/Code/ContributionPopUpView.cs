@@ -5,6 +5,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading;
+using Cysharp.Threading.Tasks;
 
 public class ContributionPopUpView : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class ContributionPopUpView : MonoBehaviour
     [SerializeField] private Button _okButton;
     [SerializeField] private GameObject _contributionsCalander;
 
+    private bool _isDisabled = false;
+
     /// <summary>
     /// 
     /// </summary>
@@ -23,7 +27,7 @@ public class ContributionPopUpView : MonoBehaviour
     /// <param name="blankDays">30日を超えてどれだけログインしていなかったか</param>
     /// <param name="previous"></param>
     /// <param name="required"></param>
-    public void Init(int count, int allCount, int blankDays, IEnumerable<DayContribution> previous, IEnumerable<DayContribution> required, bool isLastChanged)
+    public async UniTask<bool> Init(int count, int allCount, int blankDays, IEnumerable<DayContribution> previous, IEnumerable<DayContribution> required, bool isLastChanged)
     {
         _count.text = count.ToString();
         _allcount.text = allCount.ToString();
@@ -52,12 +56,19 @@ public class ContributionPopUpView : MonoBehaviour
             ApplyContribution(childObjects[index], contribution);
             index++;
         }
+        
+        
+        await UniTask.WaitUntil(() => _isDisabled);
+        
+        Destroy(this.gameObject);
+
+        return true;
     }
     
     //ボタンクリック時
     void Start()
     {
-        _okButton.onClick.AddListener(() => Destroy(this.gameObject));
+        _okButton.onClick.AddListener(() => _isDisabled = true);
     }
     
     
