@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 165622428}
   - component: {fileID: 165622427}
   - component: {fileID: 165622431}
+  - component: {fileID: 165622432}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -442,6 +443,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _contributionPopUpPref: {fileID: 453063225536636344, guid: 2b89cdfc264403d4c8bd8fba211954af,
     type: 3}
+  _uiView: {fileID: 165622432}
+--- !u!114 &165622432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165622426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd8047be88d0324d9f98172935e59d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _contributionPointGage: {fileID: 1032846063}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2475,6 +2490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2effad17824272e4a984eecc01e6b254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _useDummy: 1
 --- !u!4 &860969278
 Transform:
   m_ObjectHideFlags: 0
@@ -2659,6 +2675,12 @@ MonoBehaviour:
   _loginQueryButton: {fileID: 875025583}
   _contributionQueryButton: {fileID: 30066067}
   _createDataButton: {fileID: 592219254}
+--- !u!1 &1032846063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 975502548408493801, guid: 72c3fe52fd1686641864773a7b20ca14,
+    type: 3}
+  m_PrefabInstance: {fileID: 5477163950152543039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313255918
 GameObject:
   m_ObjectHideFlags: 0

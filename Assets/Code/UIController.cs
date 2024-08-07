@@ -1,14 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Cysharp.Threading;
+using Cysharp.Threading.Tasks;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private GameObject _contributionPopUpPref;
+    [SerializeField] private UIView _uiView;
 
     private bool _isPopUpDisabled = false;
+    private bool _isFirstGageSetting = true;
     
+
     /// <summary>
     /// ポップアップ表示関数
     /// </summary>
@@ -28,6 +34,8 @@ public class UIController : MonoBehaviour
 
     public async void SetContributionPointGage(int contributionPoint)
     {
-        
+        await UniTask.WaitUntil(() => _isPopUpDisabled ^  _isFirstGageSetting); //最初 or ポップアップが死んでいるなら
+        _uiView.SetContributionPointGage(contributionPoint);
+        _isFirstGageSetting = false;
     }
 }

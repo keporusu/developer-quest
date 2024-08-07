@@ -5,19 +5,21 @@ using UniRx;
 
 public class UserPresneter : MonoBehaviour
 {
+    [SerializeField] private bool _useDummy = false;
 
     private UserModel _userModel;
     
     void Start()
     {
-        _userModel = new UserModel(UserRepository.LoadContributionPoint(), UserRepository.LoadLevel(),
+        if (_useDummy) _userModel = new UserModel(24, 120, 25600);
+        else _userModel = new UserModel(UserRepository.LoadContributionPoint(), UserRepository.LoadLevel(),
             UserRepository.LoadExperience());
         
         var uiController = GameObject.Find("UI").GetComponent<UIController>();
 
-        _userModel.ContributionPoint.Subscribe(_ =>
+        _userModel.ContributionPoint.Subscribe(point =>
         {
-            //uiController.
+            uiController.SetContributionPointGage(point);
         });
     }
     
