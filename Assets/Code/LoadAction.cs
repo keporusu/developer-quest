@@ -35,7 +35,6 @@ public class LoadAction : MonoBehaviour
             var required = dataHandler.GetRequiredContributions().ToList();
             uiController.GenerateContributionPopUp(todayContribution,totalContributions, previous, required);
             
-            //TODO: ここのtodayContributionは差分にする（IsTodayContributionsChangeを int TodayContributionsChangeにすればよさげ）
             userPresenter.AddContributionPoint(contributionChange);
         });
     }

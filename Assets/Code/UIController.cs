@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
+using UniRx;
 
 public class UIController : MonoBehaviour
 {
@@ -13,6 +12,21 @@ public class UIController : MonoBehaviour
 
     private bool _isPopUpDisabled = false;
     private bool _isFirstGageSetting = true;
+    
+    private CharacterController _characterController;
+
+    
+    private void Start()
+    {
+        _characterController = GameObject.Find("Character").GetComponent<CharacterController>();
+
+        _uiView.Battle.Subscribe(_ => _characterController.GoBattle()).AddTo(this);
+        _uiView.Exit.Subscribe(async _ =>
+        {
+           await _characterController.Exit();
+           SceneTransition.EndGame();
+        }).AddTo(this);
+    }
     
 
     /// <summary>
@@ -38,4 +52,11 @@ public class UIController : MonoBehaviour
         _uiView.SetContributionPointGage(contributionPoint);
         _isFirstGageSetting = false;
     }
+
+    public void GoBattle()
+    {
+        _characterController.GoBattle();
+    }
+    
+    
 }
