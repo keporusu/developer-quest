@@ -56,12 +56,24 @@ public class DataHandler
     }
     
     /// <summary>
-    /// 今日のContributionsが変化したかどうかを返す（変化してたらアニメーション必要だね）
+    /// 今日のContributionsの差分を返す（変化してたらアニメーション必要だね）
     /// </summary>
     /// <returns></returns>
-    public bool IsTodayContributionsChange()
+    public int TodayContributionsChange()
     {
-        return _requiredContributions.Count != 0;
+        if (_requiredContributions.Count == 0)
+        {
+            return 0;
+        }
+        
+        var req = _requiredContributions.First();
+        var pre = _previousContributions.First();
+        if (req.Day == pre.Day)
+        {
+            return req.Count - pre.Count;
+        }
+
+        return req.Count;
     }
 
     public int GetTotalContributionsCount()

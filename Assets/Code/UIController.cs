@@ -23,7 +23,7 @@ public class UIController : MonoBehaviour
         var newPopUp = Instantiate(_contributionPopUpPref, transform);
 
         int blankDays;
-        var isLastChanged = (previous.First().Day == required.Last().Day);
+        var isLastChanged = previous.Any() && required.Any() && (previous.First().Day == required.Last().Day);
         if (isLastChanged) blankDays = 31 - (previous.Count() + required.Count());
         else blankDays = 30 - (previous.Count() + required.Count());
         

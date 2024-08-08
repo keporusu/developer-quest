@@ -22,7 +22,7 @@ public class LoadAction : MonoBehaviour
         
         _createDataButton.onClick.AddListener(() =>
         {
-            dataHandler.GetContributionsDebug("2024-07-22");
+            dataHandler.GetContributionsDebug("2024-08-08");
         });
         
         _contributionQueryButton.onClick.AddListener(async () =>
@@ -30,13 +30,13 @@ public class LoadAction : MonoBehaviour
             dataHandler.PullData();
             var previous = dataHandler.GetPreviousContributions().ToList();
             var todayContribution = dataHandler.GetTodayContributionsCount();
-            var w = dataHandler.IsTodayContributionsChange();
+            var contributionChange = dataHandler.TodayContributionsChange();
             var totalContributions = dataHandler.GetTotalContributionsCount();
             var required = dataHandler.GetRequiredContributions().ToList();
             uiController.GenerateContributionPopUp(todayContribution,totalContributions, previous, required);
             
             //TODO: ここのtodayContributionは差分にする（IsTodayContributionsChangeを int TodayContributionsChangeにすればよさげ）
-            userPresenter.AddContributionPoint(todayContribution);
+            userPresenter.AddContributionPoint(contributionChange);
         });
     }
 
