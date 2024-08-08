@@ -20,7 +20,12 @@ public class UIController : MonoBehaviour
     {
         _characterController = GameObject.Find("Character").GetComponent<CharacterController>();
 
-        _uiView.Battle.Subscribe(_ => _characterController.GoBattle()).AddTo(this);
+        _uiView.Battle.Subscribe(async _ =>
+        {
+            await _characterController.GoBattle();
+            SceneTransition.ToBattle();
+        }).AddTo(this);
+        
         _uiView.Exit.Subscribe(async _ =>
         {
            await _characterController.Exit();

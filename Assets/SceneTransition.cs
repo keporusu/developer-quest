@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneTransition
 {
@@ -12,4 +13,11 @@ public class SceneTransition
     Application.Quit();//ゲームプレイ終了
 #endif
     }
+
+    public static void ToBattle()
+    {
+        SceneManager.LoadScene("Battle");
+    }
+    
+    
 }
