@@ -200,7 +200,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 38ed06753313ef846a1f80601500bf57,
         type: 3}
       propertyPath: m_Name
-      value: Mutant@Pouting
+      value: Mutant
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 38ed06753313ef846a1f80601500bf57,
         type: 3}
@@ -1111,7 +1111,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8a9497dc24215024485d20be0d698f26,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -92.21234
+      value: -92.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8a9497dc24215024485d20be0d698f26,
         type: 3}
@@ -1161,6 +1161,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 723749107}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8a9497dc24215024485d20be0d698f26,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 723749109}
   m_SourcePrefab: {fileID: 100100000, guid: 8a9497dc24215024485d20be0d698f26, type: 3}
 --- !u!1 &557471445
 GameObject:
@@ -2340,6 +2344,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 498872698}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &723749109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723749105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204dca7d399dd6e4186abf82149a7aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &755489599
 GameObject:
   m_ObjectHideFlags: 0
