@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 
-namespace Code.Menu
+namespace Code
 {
     public class UserRepository
     {
