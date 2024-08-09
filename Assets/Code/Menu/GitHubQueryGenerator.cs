@@ -13,7 +13,9 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-public class GitHubService
+namespace Code.Menu
+{
+    public class GitHubService
 {
 
     private string _apiKey = System.Environment.GetEnvironmentVariable("GITHUB_APIKEY_FOR_UNITY");
@@ -80,5 +82,7 @@ public class GitHubService
         return new ContributionsData(counts, dayContributions);
     }
 }
+}
+
 
 

@@ -5,7 +5,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DataHandler
+namespace Code.Menu
+{
+    public class DataHandler
 {
     private ContributionDataHolder _contributionDataHolder;
     private string _today;
@@ -154,4 +156,6 @@ public class DataHandler
         return _contributionDataHolder.GetContributionsDebug(endDay);
     }
     
+}
+
 }

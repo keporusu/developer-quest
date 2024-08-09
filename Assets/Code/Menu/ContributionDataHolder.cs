@@ -10,7 +10,10 @@ using UnityEngine;
 /// <summary>
 /// データがある場所
 /// </summary>
-public class ContributionDataHolder
+
+namespace Code.Menu
+{
+    public class ContributionDataHolder
 {
 
     private readonly GitHubService _gitHubService;
@@ -124,3 +127,5 @@ public class ContributionDataHolder
 
 
 }
+}
+

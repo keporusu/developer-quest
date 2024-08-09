@@ -8,7 +8,10 @@ using UnityEngine.UI;
 using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
 
-public class ContributionPopUpView : MonoBehaviour
+
+namespace Code.Menu
+{
+    public class ContributionPopUpView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _count;
@@ -110,3 +113,5 @@ public class ContributionPopUpView : MonoBehaviour
         return Color.white; // デフォルト色（エラー時）
     }
 }
+}
+
