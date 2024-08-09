@@ -14,8 +14,11 @@ namespace Code.Battle
         private static Vector3 _lastPosition = new Vector3(28.3999996f, 22.9545708f, -92.0999985f);
         private static readonly int Stop = Animator.StringToHash("Stop");
 
+        public Subject<Unit> OnSetPosition = new Subject<Unit>();
+
         private void Start()
         {
+            
             _animator = GetComponent<Animator>();
             
             this.UpdateAsObservable()
@@ -26,9 +29,11 @@ namespace Code.Battle
                     _animator.SetTrigger(Stop);
                 }).AddTo(this);
             
-            
             transform.localPosition = _firstPosition;
-            transform.DOLocalMove(_lastPosition, 1.5f).SetEase(Ease.OutSine);
+            transform.DOLocalMove(_lastPosition, 1.5f).SetEase(Ease.OutSine).OnComplete(()=>OnSetPosition.OnNext(Unit.Default));
+            
+            
+            
         }
     }
 

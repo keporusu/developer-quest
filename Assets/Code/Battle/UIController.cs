@@ -16,9 +16,19 @@ namespace Code.Battle
             SetMyGage(contributionPoint);
         }
 
-        void SetMyGage(int point)
+        public void SetMyGage(int point)
         {
             _uiView.SetMyGage(point);
+        }
+
+        public void SetEnemyGage(int point)
+        {
+            _uiView.SetEnemyGage(point);
+        }
+
+        public void SetBubble(string text)
+        {
+            _uiView.SetBubble(text);
         }
     }
 }

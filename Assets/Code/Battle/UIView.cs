@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Code.Battle
 {
@@ -11,6 +13,9 @@ namespace Code.Battle
         private float _maxCP = 40f;
 
         [SerializeField] private RectTransform _enemyGage;
+        private float _maxEP = 500f;
+
+        [SerializeField] private TextMeshProUGUI _text;
 
         public void SetMyGage(int point)
         {
@@ -19,9 +24,15 @@ namespace Code.Battle
 
         public void SetEnemyGage(int point)
         {
-            
+            _enemyGage.localScale = new Vector3(point / _maxEP, _enemyGage.localScale.y, _enemyGage.localScale.z);
         }
-            
+
+        public void SetBubble(string text)
+        {
+            _text.text = text;
+        }
+        
+        
         
     }
 }
