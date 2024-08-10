@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using UnityEngine.UIElements;
 
 namespace Code.Battle
 {
@@ -16,7 +17,7 @@ namespace Code.Battle
 
         public readonly Subject<Unit> OnSetPosition = new Subject<Unit>();
 
-        private void Start()
+        private async void Start()
         {
             
             _animator = GetComponent<Animator>();
@@ -30,8 +31,10 @@ namespace Code.Battle
                 }).AddTo(this);
             
             
+            
             transform.localPosition = _firstPosition;
-            transform.DOLocalMove(_lastPosition, 1.5f)
+            
+            await transform.DOLocalMove(_lastPosition, 1.5f)
                 .SetEase(Ease.OutSine)
                 .OnComplete(() =>
                 {
@@ -40,10 +43,17 @@ namespace Code.Battle
                     OnSetPosition.OnCompleted();
                 }
                     
-                    );
+                    )
+                .AsyncWaitForCompletion();
+
             
-            
-            
+            this.UpdateAsObservable()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ =>
+                {
+                    
+                }).AddTo(this);
+
         }
     }
 
