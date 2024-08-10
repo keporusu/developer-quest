@@ -20,12 +20,16 @@ namespace Code.Battle
             _uiController.StartDialogue();
             
             this.UpdateAsObservable()
-                .Where(_ => Input.GetMouseButtonDown(0) && _uiController.IsDialogueActive)
+                .Where(_ => Input.GetMouseButtonDown(0))
                 .Subscribe(_ => _uiController.AdvanceDialogue())
                 .AddTo(this);
             
             //CharacterControllerのUpdate
 
+            this.UpdateAsObservable()
+                .Where(_ => Input.GetMouseButtonDown(0))
+                .Subscribe(_ => _characterController.Attack())
+                .AddTo(this);
 
         }
         

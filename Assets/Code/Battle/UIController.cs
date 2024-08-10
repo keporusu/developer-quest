@@ -12,7 +12,7 @@ namespace Code.Battle
         [SerializeField] private UIView _uiView;
         private DialogueManager _dialogueManager;
         private bool _isDialogueActive = false;
-        public bool IsDialogueActive => _isDialogueActive;
+       // public bool IsDialogueActive => _isDialogueActive;
         
         private void Start()
         {
@@ -42,7 +42,10 @@ namespace Code.Battle
 
         public void AdvanceDialogue()
         {
-            _dialogueManager.AdvanceDialogue();
+            //ダイアログが無効になっているなら会話を進められない
+            if(!_isDialogueActive)return;
+            var dialogueIndex = _dialogueManager.AdvanceDialogue();
+            if (dialogueIndex == 1) _isDialogueActive = false;
         }
         
         

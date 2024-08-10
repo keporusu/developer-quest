@@ -16,6 +16,7 @@ namespace Code.Battle
         private static readonly int Stop = Animator.StringToHash("Stop");
 
         public readonly Subject<Unit> OnSetPosition = new Subject<Unit>();
+        private static readonly int SimpleAttack = Animator.StringToHash("SimpleAttack");
 
         private async void Start()
         {
@@ -54,6 +55,14 @@ namespace Code.Battle
                     
                 }).AddTo(this);
 
+        }
+
+
+        public void Attack(int? param=null)
+        {
+            bool isSpecificAnimPlaying = _animator.GetCurrentAnimatorStateInfo(0).IsName("SimpleAttack");
+            if (isSpecificAnimPlaying) return;
+            _animator.SetTrigger(SimpleAttack);
         }
     }
 

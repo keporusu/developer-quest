@@ -25,7 +25,7 @@ namespace Code.Battle
             AdvanceDialogue();
         }
 
-        public void AdvanceDialogue()
+        public int AdvanceDialogue()
         {
             _currentIndex++;
             if (_currentIndex < _dialogues.Length)
@@ -37,6 +37,8 @@ namespace Code.Battle
                 Debug.Log("会話が終了しました。");
                 // ここで会話終了後の処理を行う
             }
+
+            return _currentIndex;
         }
     }
 
