@@ -13,6 +13,7 @@ namespace Code.Battle
         async void Start()
         {
             await _characterController.OnSetPosition; //ここからゲームスタート
+            _uiController.SetBubble("ミュータントが現れた！");
             
             
             
