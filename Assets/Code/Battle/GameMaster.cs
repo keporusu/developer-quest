@@ -24,7 +24,8 @@ namespace Code.Battle
             if (enemyPoint <= 0)
             {
                 _monsterManager.CreateMonster();
-                _uiController.SetEnemyGage(100);
+                enemyPoint = 100;
+                _uiController.SetEnemyGage(enemyPoint);
             }
             else
             {
@@ -50,7 +51,8 @@ namespace Code.Battle
                 .Subscribe(_ =>
                 {
                     _characterController.Attack();
-                    _uiController.ReadyDamage(0);
+                    _uiController.SetMyGage(--contributionPoint);
+                    _uiController.ReadyDamage(0,--enemyPoint);
                 })
                 .AddTo(this);
 

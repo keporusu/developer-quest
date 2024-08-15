@@ -65,9 +65,13 @@ namespace Code.Battle
         
         
         //ダメージのアクションはためておく
-        public void ReadyDamage(int damage)
+        public void ReadyDamage(int damage, int point)
         {
-            _damageActions.AddAction(()=>_damagePointCreator.Create(damage));
+            _damageActions.AddAction(()=>
+            {
+                _damagePointCreator.Create(damage);
+                SetEnemyGage(point);
+            });
         }
         
         
