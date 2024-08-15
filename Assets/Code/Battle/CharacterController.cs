@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine.UIElements;
+using ObservableExtensions = UniRx.ObservableExtensions;
 
 namespace Code.Battle
 {
@@ -17,16 +20,20 @@ namespace Code.Battle
 
         public readonly Subject<Unit> OnSetPosition = new Subject<Unit>();
         private static readonly int SimpleAttack = Animator.StringToHash("SimpleAttack");
+        
+        //アニメーション開始直後はfalseにする
+        private bool _allow = true;
+        public bool Allow => _allow;
+        
 
         private async void Start()
         {
             
             _animator = GetComponent<Animator>();
             
-            this.UpdateAsObservable()
-                .Where(_ => transform.localPosition.z < -91.2f)
-                .Take(1)
-                .Subscribe(_ =>
+            ObservableExtensions.Subscribe(this.UpdateAsObservable()
+                    .Where(_ => transform.localPosition.z < -91.2f)
+                    .Take(1), _ =>
                 {
                     _animator.SetTrigger(Stop);
                 }).AddTo(this);
@@ -48,9 +55,8 @@ namespace Code.Battle
                 .AsyncWaitForCompletion();
 
             
-            this.UpdateAsObservable()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ =>
+            ObservableExtensions.Subscribe(this.UpdateAsObservable()
+                    .Where(_ => Input.GetMouseButtonDown(0)), _ =>
                 {
                     
                 }).AddTo(this);
@@ -58,13 +64,22 @@ namespace Code.Battle
         }
 
 
-        public bool Attack(int? param=null)
+        public void Attack(int? param=null)
         {
-            bool isSpecificAnimPlaying = _animator.GetCurrentAnimatorStateInfo(0).IsName("SimpleAttack");
-            if (isSpecificAnimPlaying) return false; //失敗
+            //bool isSpecificAnimPlaying = _animator.GetCurrentAnimatorStateInfo(0).IsName("SimpleAttack");
+            //if (isSpecificAnimPlaying) return false; //失敗
+            var res = _makeDelay();
             _animator.SetTrigger(SimpleAttack);
-            return true; //成功
+            //return true; //成功
         }
+
+        private async UniTask _makeDelay()
+        {
+            _allow = false;
+           await UniTask.Delay(TimeSpan.FromSeconds(0.7f));
+           _allow = true;
+        }
+        
     }
 
 }

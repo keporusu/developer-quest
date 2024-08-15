@@ -9,6 +9,7 @@ namespace Code
         private const string CONTRIBUTION_POINT_KEY = "ContributionPoint";
         private const string LEVEL_KEY = "Level";
         private const string EXPERIENCE_KEY = "Experience";
+        private const string ENEMY_POINT_KEY = "Enemy Point";
 
         public static int LoadContributionPoint()
         {
@@ -40,6 +41,17 @@ namespace Code
         public static void SaveExperience(int experience)
         {
             PlayerPrefs.SetInt(EXPERIENCE_KEY, experience);
+            PlayerPrefs.Save();
+        }
+
+        public static int LoadEnemyPoint()
+        {
+            return PlayerPrefs.GetInt(ENEMY_POINT_KEY, 0);
+        }
+
+        public static void SetEnemyPoint(int point)
+        {
+            PlayerPrefs.SetInt(EXPERIENCE_KEY, point);
             PlayerPrefs.Save();
         }
     }

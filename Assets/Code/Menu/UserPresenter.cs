@@ -5,7 +5,7 @@ using UniRx;
 
 namespace Code.Menu
 {
-    public class UserPresneter : MonoBehaviour
+    public class UserPresenter : MonoBehaviour
     {
         [SerializeField] private bool _useDummy = false;
 

@@ -10,6 +10,7 @@ namespace Code.Battle
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private UIController _uiController;
+        [SerializeField] private MonsterManager _monsterManager;
         private Mode _battleMode = Mode.PreBattle;
 
         async void Start()
@@ -17,7 +18,20 @@ namespace Code.Battle
             //最初のCPをセット
             // TODO: ここにUserRepositoryに登録されているやつ全部引き出す
             var contributionPoint = UserRepository.LoadContributionPoint();
+            var enemyPoint = UserRepository.LoadEnemyPoint();
+            
             _uiController.SetMyGage(contributionPoint);
+            if (enemyPoint <= 0)
+            {
+                _monsterManager.CreateMonster();
+                _uiController.SetEnemyGage(100);
+            }
+            else
+            {
+                _uiController.SetEnemyGage(enemyPoint);
+            }
+            
+            
             
             await _characterController.OnSetPosition; //ここからゲームスタート
             
@@ -32,11 +46,11 @@ namespace Code.Battle
             
             //攻撃
             this.UpdateAsObservable()
-                .Where(_ => Input.GetMouseButtonDown(0))
+                .Where(_ => Input.GetMouseButtonDown(0) && _characterController.Allow)
                 .Subscribe(_ =>
                 {
-                    var success = _characterController.Attack();
-                    if (success) _uiController.ReadyDamage(0);
+                    _characterController.Attack();
+                    _uiController.ReadyDamage(0);
                 })
                 .AddTo(this);
 

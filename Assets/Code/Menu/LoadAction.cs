@@ -15,7 +15,7 @@ namespace Code.Menu
         {
             var dataHandler = new DataHandler();
             var uiController = GameObject.Find("UI").GetComponent<UIController>();
-            var userPresenter = GameObject.Find("UserPresenter").GetComponent<UserPresneter>();
+            var userPresenter = GameObject.Find("UserPresenter").GetComponent<UserPresenter>();
         
             _loginQueryButton.onClick.AddListener(() =>
             {
