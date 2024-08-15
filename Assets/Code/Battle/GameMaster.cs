@@ -13,23 +13,29 @@ namespace Code.Battle
         [SerializeField] private MonsterManager _monsterManager;
         private Mode _battleMode = Mode.PreBattle;
 
+        [SerializeField] private int _contributionPoint;
+        [SerializeField] private int _enemyPoint;
+
         async void Start()
         {
             //最初のCPをセット
-            // TODO: ここにUserRepositoryに登録されているやつ全部引き出す
-            var contributionPoint = UserRepository.LoadContributionPoint();
-            var enemyPoint = UserRepository.LoadEnemyPoint();
+            if (!_isTest)
+            {
+                _contributionPoint = UserRepository.LoadContributionPoint();
+                _enemyPoint = UserRepository.LoadEnemyPoint();
+            }
             
-            _uiController.SetMyGage(contributionPoint);
-            if (enemyPoint <= 0)
+            
+            _uiController.SetMyGage(_contributionPoint);
+            if (_enemyPoint <= 0)
             {
                 _monsterManager.CreateMonster();
-                enemyPoint = 100;
-                _uiController.SetEnemyGage(enemyPoint);
+                _enemyPoint = 100;
+                _uiController.SetEnemyGage(_enemyPoint);
             }
             else
             {
-                _uiController.SetEnemyGage(enemyPoint);
+                _uiController.SetEnemyGage(_enemyPoint);
             }
             
             
@@ -51,13 +57,22 @@ namespace Code.Battle
                 .Subscribe(_ =>
                 {
                     _characterController.Attack();
-                    _uiController.SetMyGage(--contributionPoint);
-                    _uiController.ReadyDamage(0,--enemyPoint);
+                    _uiController.SetMyGage(--_contributionPoint);
+                    
+                    //TODO:もし連続で攻撃を入れたいなら、ここにforを使う
+                    _uiController.ReadyDamage(0,--_enemyPoint);
                 })
                 .AddTo(this);
+            
+            
+            //TODO: ここに戦闘終了後の処理を書く
 
         }
-        
+
+
+
+        [SerializeField] private bool _isTest = true;
+
     }
 
     public enum Mode
