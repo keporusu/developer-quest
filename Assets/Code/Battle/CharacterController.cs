@@ -58,11 +58,12 @@ namespace Code.Battle
         }
 
 
-        public void Attack(int? param=null)
+        public bool Attack(int? param=null)
         {
             bool isSpecificAnimPlaying = _animator.GetCurrentAnimatorStateInfo(0).IsName("SimpleAttack");
-            if (isSpecificAnimPlaying) return;
+            if (isSpecificAnimPlaying) return false; //失敗
             _animator.SetTrigger(SimpleAttack);
+            return true; //成功
         }
     }
 

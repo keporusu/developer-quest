@@ -4,21 +4,36 @@ using Code.Menu;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Code.Battle
 {
     public class UIController : MonoBehaviour
     {
         [SerializeField] private UIView _uiView;
+
+        private DamagePointCreator _damagePointCreator;
+        
         private DialogueManager _dialogueManager;
         private bool _isDialogueActive = false;
-       // public bool IsDialogueActive => _isDialogueActive;
+
+        private ActionManager _damageActions;
         
         private void Start()
         {
             _dialogueManager = new DialogueManager();
-            var contributionPoint = UserRepository.LoadContributionPoint();
-            SetMyGage(contributionPoint);
+
+            _damageActions = new ActionManager();
+            
+            var hitBox = GameObject.Find("HitBox");
+            _damagePointCreator = GameObject.Find("DamagePointCreator").GetComponent<DamagePointCreator>();
+            
+            //どうせここは剣しか来ない
+            hitBox.OnTriggerEnterAsObservable().Subscribe(_ =>
+            {
+                _damageActions?.InvokeActions();
+                _damageActions?.RemoveOldestAction();
+            });
             
             //タップで次のダイアログ
             //this.UpdateAsObservable()
@@ -46,6 +61,13 @@ namespace Code.Battle
             if(!_isDialogueActive)return;
             var dialogueIndex = _dialogueManager.AdvanceDialogue();
             if (dialogueIndex == 1) _isDialogueActive = false;
+        }
+        
+        
+        //ダメージのアクションはためておく
+        public void ReadyDamage(int damage)
+        {
+            _damageActions.AddAction(()=>_damagePointCreator.Create(damage));
         }
         
         

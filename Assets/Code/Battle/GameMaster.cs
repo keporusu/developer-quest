@@ -14,21 +14,29 @@ namespace Code.Battle
 
         async void Start()
         {
+            //最初のCPをセット
+            var contributionPoint = UserRepository.LoadContributionPoint();
+            _uiController.SetMyGage(contributionPoint);
+            
             await _characterController.OnSetPosition; //ここからゲームスタート
             
             
             _uiController.StartDialogue();
             
+            //会話進める
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0))
                 .Subscribe(_ => _uiController.AdvanceDialogue())
                 .AddTo(this);
             
-            //CharacterControllerのUpdate
-
+            //攻撃
             this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => _characterController.Attack())
+                .Subscribe(_ =>
+                {
+                    var success = _characterController.Attack();
+                    if (success) _uiController.ReadyDamage(0);
+                })
                 .AddTo(this);
 
         }
