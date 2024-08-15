@@ -15,6 +15,7 @@ namespace Code.Battle
         async void Start()
         {
             //最初のCPをセット
+            // TODO: ここにUserRepositoryに登録されているやつ全部引き出す
             var contributionPoint = UserRepository.LoadContributionPoint();
             _uiController.SetMyGage(contributionPoint);
             
