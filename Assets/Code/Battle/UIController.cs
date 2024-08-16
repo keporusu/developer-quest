@@ -16,8 +16,13 @@ namespace Code.Battle
         
         private DialogueManager _dialogueManager;
         private bool _isDialogueActive = false;
+        public bool IsDialogueActivate => _isDialogueActive;
 
         private ActionManager _damageActions;
+
+        private int _dialogueIndex = 0;
+        public int DialogueIndex => _dialogueIndex;
+        
         
         private void Start()
         {
@@ -59,8 +64,23 @@ namespace Code.Battle
         {
             //ダイアログが無効になっているなら会話を進められない
             if(!_isDialogueActive)return;
-            var dialogueIndex = _dialogueManager.AdvanceDialogue();
-            if (dialogueIndex == 1) _isDialogueActive = false;
+            _dialogueIndex = _dialogueManager.AdvanceDialogue();
+            if (_dialogueIndex == 1) _isDialogueActive = false;
+        }
+
+        public void DialogueActivate()
+        {
+            _isDialogueActive = true;
+        }
+
+        public void DialogueDeactivate()
+        {
+            _isDialogueActive = false;
+        }
+
+        public void ChangeLastDialogue()
+        {
+            _dialogueManager.ChangeLast();
         }
         
         

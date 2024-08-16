@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class HitChecker : MonoBehaviour
 {
-    private Animator _mutantAnimator;
+    private MonsterController _monsterController;
     
     private static readonly int Damaged = Animator.StringToHash("Damaged");
 
     private void Start()
     {
-        _mutantAnimator = GameObject.Find("Monster").GetComponent<Animator>();
+        _monsterController = GameObject.Find("Monster").GetComponent<MonsterController>();
         
     }
 
@@ -20,6 +20,6 @@ public class HitChecker : MonoBehaviour
     {
         //どうせ剣しか通らないので手抜きで
         Debug.Log("Yeah");
-        _mutantAnimator.SetTrigger(Damaged);
+        _monsterController.Damaged();
     }
 }

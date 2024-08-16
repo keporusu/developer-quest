@@ -7,6 +7,7 @@ namespace Code.Battle
 {
     public class DialogueManager
     {
+        private string _monster;
         private string[] _dialogues = new string[]
         {
             "ミュータントが現れた！",
@@ -14,6 +15,8 @@ namespace Code.Battle
             "ミュータントが攻撃してきた！ あなたは逃げた！"
         };
 
+        private string _anotherLastDialogue = "ミュータントを倒した！";
+        
         private int _currentIndex = -1;
 
         private readonly ReactiveProperty<string> _currentDialogue  = new ReactiveProperty<string>();
@@ -39,6 +42,11 @@ namespace Code.Battle
             }
 
             return _currentIndex;
+        }
+
+        public void ChangeLast()
+        {
+            _dialogues[2] = _anotherLastDialogue;
         }
     }
 

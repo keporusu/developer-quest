@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -46,13 +47,36 @@ namespace Code.Battle
             _uiController.StartDialogue();
             
             //会話進める
-            this.UpdateAsObservable()
-                .Where(_ => Input.GetMouseButtonDown(0))
-                .Subscribe(_ => _uiController.AdvanceDialogue())
+            var dialogue =this.UpdateAsObservable()
+                .Where(_ => Input.GetMouseButtonDown(0) && _uiController.IsDialogueActivate)
+                .Subscribe(_ =>
+                {
+                    if(_enemyPoint<=0)_uiController.ChangeLastDialogue();
+                    _uiController.AdvanceDialogue();
+                    
+                    switch (_uiController.DialogueIndex)
+                    {
+                        case 1: 
+                            _uiController.DialogueDeactivate();
+                            break;
+                        case 2:
+                            _uiController.DialogueDeactivate();
+                            if (_enemyPoint <= 0)
+                            {
+                                _monsterManager.Die();
+                            }
+                            else
+                            {
+                                _monsterManager.Attack();
+                                _characterController.Escape();
+                            }
+                            break;
+                    }
+                })
                 .AddTo(this);
             
             //攻撃
-            this.UpdateAsObservable()
+            var attack= this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0) && _characterController.Allow)
                 .Subscribe(_ =>
                 {
@@ -64,8 +88,13 @@ namespace Code.Battle
                 })
                 .AddTo(this);
             
-            
+            //どちらかのゲージが尽きるまで戦闘が続く
+            await UniTask.WaitUntil(() => _contributionPoint <= 0 || _enemyPoint <= 0);
+
             //TODO: ここに戦闘終了後の処理を書く
+            attack.Dispose();
+            _uiController.DialogueActivate();
+            
 
         }
 

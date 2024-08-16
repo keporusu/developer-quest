@@ -23,6 +23,7 @@ namespace Code.Battle
         
         //アニメーション開始直後はfalseにする
         private bool _allow = true;
+        private static readonly int Escape1 = Animator.StringToHash("Escape");
         public bool Allow => _allow;
         
 
@@ -71,6 +72,11 @@ namespace Code.Battle
             var res = _makeDelay();
             _animator.SetTrigger(SimpleAttack);
             //return true; //成功
+        }
+
+        public void Escape()
+        {
+            _animator.SetTrigger(Escape1);
         }
 
         private async UniTask _makeDelay()
