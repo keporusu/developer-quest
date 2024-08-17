@@ -108,7 +108,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MainController
+  m_Name: BattleCharacter
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Run
@@ -240,13 +240,13 @@ AnimatorStateMachine:
     m_Position: {x: 160, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7978885817650076011}
-    m_Position: {x: 360, y: 200, z: 0}
+    m_Position: {x: 320, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2458902758708949849}
     m_Position: {x: 720, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2276298995222693078}
-    m_Position: {x: 800, y: 80, z: 0}
+    m_Position: {x: 850, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 2714606884087266378}
@@ -254,7 +254,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 530, y: 10, z: 0}
+  m_AnyStatePosition: {x: 470, y: 80, z: 0}
   m_EntryPosition: {x: 100, y: 300, z: 0}
   m_ExitPosition: {x: 980, y: -20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
