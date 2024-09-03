@@ -20,6 +20,10 @@ namespace Code.Menu
     [SerializeField] private TextMeshProUGUI _allcount;
     [SerializeField] private Button _okButton;
     [SerializeField] private GameObject _contributionsCalander;
+    
+    //移動に使う
+    [SerializeField] private float _cellSize = 135.92f;
+    [SerializeField] private Vector3 _initialContentPosition = new Vector3(-535f,401.05f,0f);
 
     private bool _isDisabled = false;
 
@@ -52,7 +56,17 @@ namespace Code.Menu
             // 最後のpreviousを上書き
             index--;
         }
-
+        
+        
+        //アニメーション
+        transform.localScale = new Vector3(0f, 0f, 0f);
+        await transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f).AsyncWaitForCompletion();
+        var calenderRect = _contributionsCalander.GetComponent<RectTransform>();//.anchoredPosition;
+        calenderRect.DOAnchorPos(_initialContentPosition,0.5f);
+            //_initialContentPosition;
+        
+        //_contributionsCalander.transform.DOLocalMove(_initialContentPosition, 0.5f);
+        
         // requiredの内容を反映
         foreach (var contribution in required)
         {
@@ -60,10 +74,6 @@ namespace Code.Menu
             ApplyContribution(childObjects[index], contribution);
             index++;
         }
-        
-        //アニメーション
-        transform.localScale = new Vector3(0f, 0f, 0f);
-        transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f);
         
         
         await UniTask.WaitUntil(() => _isDisabled);
