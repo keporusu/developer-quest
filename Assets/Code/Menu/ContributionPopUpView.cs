@@ -23,7 +23,7 @@ namespace Code.Menu
     
     //移動に使う
     [SerializeField] private float _cellSize = 135.92f;
-    [SerializeField] private Vector3 _initialContentPosition = new Vector3(-535f,401.05f,0f);
+    [SerializeField] private Vector3 _initialContentPosition = new Vector3(-592.0758f,401.05f,0f);
 
     private bool _isDisabled = false;
 
@@ -56,13 +56,15 @@ namespace Code.Menu
             // 最後のpreviousを上書き
             index--;
         }
+
+        int previousIndex = index;
         
         
         //アニメーション
         transform.localScale = new Vector3(0f, 0f, 0f);
         await transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f).AsyncWaitForCompletion();
         var calenderRect = _contributionsCalander.GetComponent<RectTransform>();//.anchoredPosition;
-        calenderRect.DOAnchorPos(_initialContentPosition,0.5f);
+        await calenderRect.DOAnchorPos(_initialContentPosition, 0.5f).AsyncWaitForCompletion();
             //_initialContentPosition;
         
         //_contributionsCalander.transform.DOLocalMove(_initialContentPosition, 0.5f);
@@ -71,15 +73,22 @@ namespace Code.Menu
         foreach (var contribution in required)
         {
             if (index >= childObjects.Count) break;
-            ApplyContribution(childObjects[index], contribution);
+            await ApplyContributionByAninmation(childObjects[index], contribution);
             index++;
+            await calenderRect
+                .DOAnchorPos(
+                    new Vector2(_initialContentPosition.x, _initialContentPosition.y) -
+                    new Vector2(_cellSize, 0f) * (index-previousIndex), 0.3f).AsyncWaitForCompletion();
         }
         
         
-        await UniTask.WaitUntil(() => _isDisabled);
+        _okButton.onClick.AddListener(() =>
+        {
+            transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f)
+                .OnComplete(()=>Destroy(this.gameObject));
+            _isDisabled = true;
+        });
         
-        transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f)
-            .OnComplete(()=>Destroy(this.gameObject));
 
         return true;
     }
@@ -87,7 +96,7 @@ namespace Code.Menu
     //ボタンクリック時
     void Start()
     {
-        _okButton.onClick.AddListener(() => _isDisabled = true);
+        
     }
     
     
@@ -109,10 +118,21 @@ namespace Code.Menu
         Color color = GetColorByContributionCount(contribution.Count);
         childImage.color = color;
     }
+    
+    private async UniTask ApplyContributionByAninmation(Image childImage, DayContribution contribution)
+    {
+        Color targetColor = GetColorByContributionCount(contribution.Count);
+        Color startColor = childImage.color;
+    
+        // 色変更のアニメーション時間（秒）
+        float colorChangeDuration = 0.5f;
+
+        await childImage.DOColor(targetColor, colorChangeDuration).AsyncWaitForCompletion();
+    }
 
     private Color GetColorByContributionCount(int count)
     {
-        if (count == 0) return HexToColor("EEECF1");
+        if (count == 0) return HexToColor("FFFFFF");//HexToColor("EEECF1");
         if (count >= 1 && count <= 9) return HexToColor("9AE6A8");
         if (count >= 10 && count <= 19) return HexToColor("40C776");
         if (count >= 20 && count <= 29) return HexToColor("EBFFF8");
