@@ -40,7 +40,7 @@ namespace Code.Menu
         /// <summary>
         /// ポップアップ表示関数
         /// </summary>
-        public async void GenerateContributionPopUp(int todayContributions, int totalContributions,IList<DayContribution> previous, IList<DayContribution> required)
+        public async void GenerateContributionPopUp(int newContributions, int totalContributions,IList<DayContribution> previous, IList<DayContribution> required)
         {
             var newPopUp = Instantiate(_contributionPopUpPref, transform);
     
@@ -50,7 +50,7 @@ namespace Code.Menu
             else blankDays = 30 - (previous.Count() + required.Count());
             
             //ポップアップが消えた後に、ゲージが増える
-            _isPopUpDisabled = await newPopUp.GetComponent<ContributionPopUpView>().Init(todayContributions, totalContributions, blankDays,
+            _isPopUpDisabled = await newPopUp.GetComponent<ContributionPopUpView>().Init(newContributions, totalContributions, blankDays,
                 previous.Reverse(), required.Reverse(), isLastChanged);
         }
     

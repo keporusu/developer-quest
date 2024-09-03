@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 
 namespace Code.Menu
@@ -60,10 +61,15 @@ namespace Code.Menu
             index++;
         }
         
+        //アニメーション
+        transform.localScale = new Vector3(0f, 0f, 0f);
+        transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f);
+        
         
         await UniTask.WaitUntil(() => _isDisabled);
         
-        Destroy(this.gameObject);
+        transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f)
+            .OnComplete(()=>Destroy(this.gameObject));
 
         return true;
     }

@@ -35,9 +35,10 @@ namespace Code.Menu
                 var contributionChange = dataHandler.TodayContributionsChange();
                 var totalContributions = dataHandler.GetTotalContributionsCount();
                 var required = dataHandler.GetRequiredContributions().ToList();
-                uiController.GenerateContributionPopUp(todayContribution,totalContributions, previous, required);
 
                 var requiredCount = required.Select(x => x.Count).Sum();
+                
+                uiController.GenerateContributionPopUp(requiredCount,totalContributions, previous, required);
                 userPresenter.AddContributionPoint(requiredCount);
             });
         }
