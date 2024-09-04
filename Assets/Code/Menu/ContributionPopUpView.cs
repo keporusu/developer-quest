@@ -47,6 +47,7 @@ namespace Code.Menu
         foreach (var contribution in previous)
         {
             if (index >= childObjects.Count) break;
+            childObjects[index].GetComponent<ContributionCellView>().SetContribution(contribution);
             ApplyContribution(childObjects[index], contribution);
             index++;
         }
@@ -73,6 +74,7 @@ namespace Code.Menu
         foreach (var contribution in required)
         {
             if (index >= childObjects.Count) break;
+            childObjects[index].GetComponent<ContributionCellView>().SetContribution(contribution);
             await ApplyContributionByAninmation(childObjects[index], contribution);
             index++;
             await calenderRect

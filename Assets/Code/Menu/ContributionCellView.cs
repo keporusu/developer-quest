@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PanelHoverDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ContributionCellView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private GameObject _bubble;
     [SerializeField] private TextMeshProUGUI _text;
 
     public void SetContribution(DayContribution dayContribution)
     {
-        _text.text = dayContribution.Day + "  " + dayContribution.Count + "Contributions";
+        _text.text = dayContribution.Day + "  " + dayContribution.Count + " Contributions";
     }
     
     public void OnPointerEnter(PointerEventData eventData)
