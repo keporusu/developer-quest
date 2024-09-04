@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 6944807141029430}
   - component: {fileID: 2395628619847320651}
   - component: {fileID: 5079386124735973691}
+  - component: {fileID: 7990963443771180923}
   m_Layer: 5
   m_Name: Bubble
   m_TagString: Untagged
@@ -379,3 +380,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7990963443771180923
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923339378696578304}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

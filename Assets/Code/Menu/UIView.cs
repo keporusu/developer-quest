@@ -22,6 +22,7 @@ namespace Code.Menu
         [SerializeField] private Button _levelStatus;
         [SerializeField] private Button _githubStatus;
         [SerializeField] private Button _setting;
+        
 
         public IObservable<Unit> Battle;
         public IObservable<Unit> Exit;
@@ -35,7 +36,7 @@ namespace Code.Menu
         public void SetContributionPointGage(int contributionPoint, bool useAnimation = true)
         {
             var scale = _contributionPointGage.transform.localScale;
-            //TODO: 確認
+            
             if(useAnimation)_contributionPointGage.transform.DOScale(new Vector3(contributionPoint / _maxCP, scale.y, scale.z), 1.0f)
                 .SetEase(Ease.OutQuad);
             else _contributionPointGage.transform.localScale = new Vector3(contributionPoint / _maxCP,scale.y,scale.z);

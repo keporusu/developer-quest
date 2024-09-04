@@ -20,10 +20,11 @@ namespace Code.Menu
     [SerializeField] private TextMeshProUGUI _allcount;
     [SerializeField] private Button _okButton;
     [SerializeField] private GameObject _contributionsCalander;
+    [SerializeField] private GameObject _barrier;
     
     //移動に使う
     [SerializeField] private float _cellSize = 135.92f;
-    [SerializeField] private Vector3 _initialContentPosition = new Vector3(-592.0758f,401.05f,0f);
+    [SerializeField] private Vector3 _initialContentPosition = new Vector3(-591.3778f,401.05f,0f);
 
     private bool _isDisabled = false;
 
@@ -62,10 +63,12 @@ namespace Code.Menu
         
         
         //アニメーション
+        var calenderRect = _contributionsCalander.GetComponent<RectTransform>();
+        calenderRect.anchoredPosition = _initialContentPosition;
         transform.localScale = new Vector3(0f, 0f, 0f);
         await transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f).AsyncWaitForCompletion();
-        var calenderRect = _contributionsCalander.GetComponent<RectTransform>();//.anchoredPosition;
-        await calenderRect.DOAnchorPos(_initialContentPosition, 0.5f).AsyncWaitForCompletion();
+        //var calenderRect = _contributionsCalander.GetComponent<RectTransform>();
+        //await calenderRect.DOAnchorPos(_initialContentPosition, 0.5f).AsyncWaitForCompletion();
             //_initialContentPosition;
         
         //_contributionsCalander.transform.DOLocalMove(_initialContentPosition, 0.5f);
@@ -75,14 +78,23 @@ namespace Code.Menu
         {
             if (index >= childObjects.Count) break;
             childObjects[index].GetComponent<ContributionCellView>().SetContribution(contribution);
-            await ApplyContributionByAninmation(childObjects[index], contribution);
-            index++;
-            await calenderRect
-                .DOAnchorPos(
-                    new Vector2(_initialContentPosition.x, _initialContentPosition.y) -
-                    new Vector2(_cellSize, 0f) * (index-previousIndex), 0.3f).AsyncWaitForCompletion();
+            if (contribution.Count == 0)
+            {
+                index++;
+            }
+            else
+            {
+                await calenderRect
+                    .DOAnchorPos(
+                        new Vector2(_initialContentPosition.x, _initialContentPosition.y) -
+                        new Vector2(_cellSize, 0f) * (index-previousIndex-1), 0.3f).AsyncWaitForCompletion();
+                index++;
+                await ApplyContributionByAninmation(childObjects[index], contribution);
+            }
         }
         
+        //ここで押せるようにする
+        _barrier.SetActive(false);
         
         _okButton.onClick.AddListener(() =>
         {
