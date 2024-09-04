@@ -85,21 +85,15 @@ namespace Code.Menu
         _okButton.onClick.AddListener(() =>
         {
             transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f)
-                .OnComplete(()=>Destroy(this.gameObject));
+                .OnComplete(()=>gameObject.SetActive(false));
             _isDisabled = true;
         });
         
 
         return true;
     }
-    
-    //ボタンクリック時
-    void Start()
-    {
-        
-    }
-    
-    
+
+
     private IEnumerable<Image> GetDirectChildrenImages()
     {
         var parent = _contributionsCalander.transform;

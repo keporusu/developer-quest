@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UniRx;
 using Unity.VisualScripting;
 using Unit = UniRx.Unit;
+using DG.Tweening;
 
 
 namespace Code.Menu
@@ -31,13 +32,16 @@ namespace Code.Menu
             Exit = _exit.OnClickAsObservable();
         }
 
-        public void SetContributionPointGage(int contributionPoint)
+        public void SetContributionPointGage(int contributionPoint, bool useAnimation = true)
         {
             var scale = _contributionPointGage.transform.localScale;
-            _contributionPointGage.transform.localScale = new Vector3(contributionPoint / _maxCP,scale.y,scale.z);
+            //TODO: 確認
+            if(useAnimation)_contributionPointGage.transform.DOScale(new Vector3(contributionPoint / _maxCP, scale.y, scale.z), 1.0f)
+                .SetEase(Ease.OutQuad);
+            else _contributionPointGage.transform.localScale = new Vector3(contributionPoint / _maxCP,scale.y,scale.z);
         }
-    
-    
+
+
     }
 
 }

@@ -57,7 +57,7 @@ namespace Code.Menu
         public async void SetContributionPointGage(int contributionPoint)
         {
             await UniTask.WaitUntil(() => _isPopUpDisabled ^  _isFirstGageSetting); //最初 or ポップアップが死んでいるなら
-            _uiView.SetContributionPointGage(contributionPoint);
+            _uiView.SetContributionPointGage(contributionPoint, !_isFirstGageSetting);
             _isFirstGageSetting = false;
         }
     
