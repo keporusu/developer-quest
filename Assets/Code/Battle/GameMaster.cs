@@ -101,7 +101,7 @@ namespace Code.Battle
                     _contributionPoint -= decreasingStep;
                     _uiController.SetMyGage(_contributionPoint);
                     
-                    var damage = decreasingStep * Random.Range(10f, 11f); // 0以上100未満の整数;
+                    var damage = decreasingStep * Random.Range(2f, 2.5f); // 0以上100未満の整数;
                     _enemyPoint -= (int)damage;
                     _uiController.ReadyDamage((int)damage,_enemyPoint);
                     
