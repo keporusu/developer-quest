@@ -11,6 +11,8 @@ namespace Code.Menu
     public class UIController : MonoBehaviour
     {
         [SerializeField] private GameObject _contributionPopUpPref;
+        private GameObject _contributionPopUp;
+        
         [SerializeField] private UIView _uiView;
     
         private bool _isPopUpDisabled = false;
@@ -50,8 +52,12 @@ namespace Code.Menu
             else blankDays = 30 - (previous.Count() + required.Count());
             
             //ポップアップが消えた後に、ゲージが増える
-            _isPopUpDisabled = await newPopUp.GetComponent<ContributionPopUpView>().Init(newContributions, totalContributions, blankDays,
+            var contributionPopUpView = newPopUp.GetComponent<ContributionPopUpView>();
+            _isPopUpDisabled = await contributionPopUpView.Init(newContributions, totalContributions, blankDays,
                 previous.Reverse(), required.Reverse(), isLastChanged);
+
+            _uiView.GitHub.Subscribe(async _ => await contributionPopUpView.Activate()).AddTo(gameObject);
+            
         }
     
         public async void SetContributionPointGage(int contributionPoint)

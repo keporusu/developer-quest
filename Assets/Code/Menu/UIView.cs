@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -24,13 +25,19 @@ namespace Code.Menu
         [SerializeField] private Button _setting;
         
 
-        public IObservable<Unit> Battle;
-        public IObservable<Unit> Exit;
+        public IObservable<Unit> Battle { get; private set; }
+        public IObservable<Unit> Exit { get; private set; }
+        public IObservable<Unit> GitHub { get; private set; }
+        public IObservable<Unit> Level  { get; private set; }
+        public IObservable<Unit> Setting  { get; private set; }
 
         private void Awake()
         {
             Battle = _battle.OnClickAsObservable();
             Exit = _exit.OnClickAsObservable();
+            GitHub = _githubStatus.OnClickAsObservable();
+            Level = _levelStatus.OnClickAsObservable();
+            Setting = _setting.OnClickAsObservable();
         }
 
         public void SetContributionPointGage(int contributionPoint, bool useAnimation = true)

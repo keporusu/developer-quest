@@ -64,9 +64,7 @@ namespace Code.Menu
         
         //アニメーション
         var calenderRect = _contributionsCalander.GetComponent<RectTransform>();
-        calenderRect.anchoredPosition = _initialContentPosition;
-        transform.localScale = new Vector3(0f, 0f, 0f);
-        await transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f).AsyncWaitForCompletion();
+        await _uiStartAnimation(calenderRect);
         //var calenderRect = _contributionsCalander.GetComponent<RectTransform>();
         //await calenderRect.DOAnchorPos(_initialContentPosition, 0.5f).AsyncWaitForCompletion();
             //_initialContentPosition;
@@ -96,15 +94,27 @@ namespace Code.Menu
         //ここで押せるようにする
         _barrier.SetActive(false);
         
-        _okButton.onClick.AddListener(() =>
+        _okButton.onClick.AddListener(async () =>
         {
-            transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f)
-                .OnComplete(()=>gameObject.SetActive(false));
-            _isDisabled = true;
+            await InActivate();
         });
         
 
         return true;
+    } 
+
+    public async UniTask Activate()
+    {
+        gameObject.SetActive(true);
+        _isDisabled = false;
+        await _uiStartAnimation(_contributionsCalander.GetComponent<RectTransform>());
+    }
+
+    public async UniTask InActivate()
+    {
+        await _uiEndAnimation();
+        gameObject.SetActive(false);
+        _isDisabled = true;
     }
 
 
@@ -155,6 +165,18 @@ namespace Code.Menu
             return color;
         }
         return Color.white; // デフォルト色（エラー時）
+    }
+
+    private async UniTask _uiStartAnimation(RectTransform rect)
+    {
+        rect.anchoredPosition = _initialContentPosition;
+        transform.localScale = new Vector3(0f, 0f, 0f);
+        await transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 0.5f).AsyncWaitForCompletion();
+
+    }
+    private async UniTask _uiEndAnimation()
+    {
+        await transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f).AsyncWaitForCompletion();
     }
 }
 }
