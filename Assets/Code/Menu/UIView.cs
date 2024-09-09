@@ -16,7 +16,7 @@ namespace Code.Menu
     public class UIView : MonoBehaviour
     {
         [SerializeField] private GameObject _contributionPointGage;
-        private float _maxCP = 40f;
+        private float _maxCP = 100f;
 
         [SerializeField] private Button _battle;
         [SerializeField] private Button _exit;

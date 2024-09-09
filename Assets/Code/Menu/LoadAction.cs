@@ -11,6 +11,7 @@ namespace Code.Menu
         [SerializeField] private Button _loginQueryButton;
         [SerializeField] private Button _contributionQueryButton;
         [SerializeField] private Button _createDataButton;
+        [SerializeField] private string endDayForDebug;
         void Start()
         {
             var dataHandler = new DataHandler();
@@ -24,7 +25,7 @@ namespace Code.Menu
         
             _createDataButton.onClick.AddListener(() =>
             {
-                dataHandler.GetContributionsDebug("2024-08-08");
+                dataHandler.GetContributionsDebug(endDayForDebug);
             });
         
             _contributionQueryButton.onClick.AddListener(async () =>

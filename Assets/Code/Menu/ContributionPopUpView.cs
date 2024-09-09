@@ -75,7 +75,7 @@ namespace Code.Menu
         foreach (var contribution in required)
         {
             if (index >= childObjects.Count) break;
-            childObjects[index].GetComponent<ContributionCellView>().SetContribution(contribution);
+            
             if (contribution.Count == 0)
             {
                 index++;
@@ -85,9 +85,14 @@ namespace Code.Menu
                 await calenderRect
                     .DOAnchorPos(
                         new Vector2(_initialContentPosition.x, _initialContentPosition.y) -
-                        new Vector2(_cellSize, 0f) * (index-previousIndex-1), 0.3f).AsyncWaitForCompletion();
+                        new Vector2(_cellSize, 0f) * (index-2.7f), 0.3f).AsyncWaitForCompletion();
                 index++;
+                
+                var cellView = childObjects[index].GetComponent<ContributionCellView>();
+                cellView.SetContribution(contribution);
+                cellView.ActivateBubble();
                 await ApplyContributionByAninmation(childObjects[index], contribution);
+                cellView.InActivateBubble();
             }
         }
         
