@@ -2850,6 +2850,7 @@ MonoBehaviour:
   _loginQueryButton: {fileID: 875025583}
   _contributionQueryButton: {fileID: 30066067}
   _createDataButton: {fileID: 592219254}
+  endDayForDebug: 2024-08-16
 --- !u!1 &1032846063 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 975502548408493801, guid: 72c3fe52fd1686641864773a7b20ca14,
