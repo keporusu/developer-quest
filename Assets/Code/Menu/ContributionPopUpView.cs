@@ -38,8 +38,8 @@ namespace Code.Menu
     /// <param name="required"></param>
     public async UniTask<bool> Init(int count, int allCount, int blankDays, IEnumerable<DayContribution> previous, IEnumerable<DayContribution> required, bool isLastChanged)
     {
-        _count.text = count.ToString();
-        _allcount.text = allCount.ToString();
+        //_count.text = count.ToString();
+        //_allcount.text = allCount.ToString();
         
         var childObjects = GetDirectChildrenImages().ToList();
         int index = 0;
@@ -91,6 +91,8 @@ namespace Code.Menu
                 var cellView = childObjects[index].GetComponent<ContributionCellView>();
                 cellView.SetContribution(contribution);
                 cellView.ActivateBubble();
+                var x=_updateCount(_count,contribution.Count);
+                var y = _updateCount(_allcount, contribution.Count);
                 await ApplyContributionByAninmation(childObjects[index], contribution);
                 cellView.InActivateBubble();
             }
@@ -182,6 +184,20 @@ namespace Code.Menu
     private async UniTask _uiEndAnimation()
     {
         await transform.DOScale(new Vector3(0f, 0f, 0f), 0.2f).AsyncWaitForCompletion();
+    }
+
+    
+    private async UniTask _updateCount(TextMeshProUGUI text, int addNum)
+    {
+        var firstNum = int.Parse(text.text);
+        var lastNum = int.Parse(text.text)+addNum;
+        // カウント部分のアニメーション
+        await DOTween.To(() => firstNum, x => 
+            {
+                text.text = $"{x}";
+            }, lastNum, 0.5f)
+            .SetEase(Ease.OutQuad)
+            .AsyncWaitForCompletion();
     }
 }
 }
