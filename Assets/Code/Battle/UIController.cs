@@ -36,8 +36,8 @@ namespace Code.Battle
             //どうせここは剣しか来ない
             hitBox.OnTriggerEnterAsObservable().Subscribe(_ =>
             {
-                _damageActions?.InvokeActions();
-                _damageActions?.RemoveOldestAction();
+                _damageActions?.InvokeAction();
+                //_damageActions?.RemoveOldestAction();
             });
             
             //タップで次のダイアログ

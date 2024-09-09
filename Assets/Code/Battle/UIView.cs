@@ -10,7 +10,7 @@ namespace Code.Battle
     public class UIView : MonoBehaviour
     {
         [SerializeField] private RectTransform _myGage;
-        private float _maxCP = 40f;
+        private float _maxCP = 100f;
 
         [SerializeField] private RectTransform _enemyGage;
         private float _maxEP = 100f;
@@ -24,6 +24,7 @@ namespace Code.Battle
 
         public void SetEnemyGage(int point)
         {
+            if (point < 0) point = 0;
             _enemyGage.localScale = new Vector3(point / _maxEP, _enemyGage.localScale.y, _enemyGage.localScale.z);
         }
 

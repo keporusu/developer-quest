@@ -3201,6 +3201,7 @@ MonoBehaviour:
   _loginQueryButton: {fileID: 875025583}
   _contributionQueryButton: {fileID: 30066067}
   _createDataButton: {fileID: 592219254}
+  endDayForDebug: 
 --- !u!224 &1112558123 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3369098483022973449, guid: cffed4817aefc3e45814d5ce546178c6,
@@ -3432,7 +3433,7 @@ MonoBehaviour:
   _monsterManager: {fileID: 1785303125}
   _contributionPoint: 3
   _enemyPoint: 4
-  _isTest: 1
+  _isTest: 0
 --- !u!114 &1454366729
 MonoBehaviour:
   m_ObjectHideFlags: 0

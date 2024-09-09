@@ -5,6 +5,7 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
+
 namespace Code.Battle
 {
     public class GameMaster : MonoBehaviour
@@ -76,15 +77,35 @@ namespace Code.Battle
                 .AddTo(this);
             
             //攻撃
+            
+            var decreasingStep = (int)Mathf.Floor(_contributionPoint / 5.0f);
+
+            /*for (int x = _contributionPoint; x >= 0; x -= decreasingStep)
+            {
+                var damage = decreasingStep * 10;
+                _enemyPoint -= damage;
+                _uiController.ReadyDamage(damage,_enemyPoint);
+                if (x!=0 && x - decreasingStep < 0)
+                {
+                    var damage2 = x * 10;
+                    _enemyPoint -= damage2;
+                    _uiController.ReadyDamage(damage2,_enemyPoint);
+                }
+            }*/
+            
             var attack= this.UpdateAsObservable()
                 .Where(_ => Input.GetMouseButtonDown(0) && _characterController.Allow)
                 .Subscribe(_ =>
                 {
                     _characterController.Attack();
-                    _uiController.SetMyGage(--_contributionPoint);
+                    _contributionPoint -= decreasingStep;
+                    _uiController.SetMyGage(_contributionPoint);
+                    
+                    var damage = decreasingStep * Random.Range(10f, 11f); // 0以上100未満の整数;
+                    _enemyPoint -= (int)damage;
+                    _uiController.ReadyDamage((int)damage,_enemyPoint);
                     
                     //TODO:もし連続で攻撃を入れたいなら、ここにforを使う
-                    _uiController.ReadyDamage(0,--_enemyPoint);
                 })
                 .AddTo(this);
             

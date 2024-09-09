@@ -8,52 +8,26 @@ using System.Collections.Generic;
 
 namespace Code
 {
-    
-
-    
 
     public class ActionManager
     {
-        private List<Action> actions = new List<Action>();
+        private Queue<Action> actions = new Queue<Action>();
 
         public void AddAction(Action action)
         {
             if (action != null)
             {
-                actions.Add(action);
+                actions.Enqueue(action);
             }
         }
 
-        public bool RemoveOldestAction()
+        public void InvokeAction()
         {
             if (actions.Count > 0)
             {
-                actions.RemoveAt(0);
-                return true;
-            }
-            return false;
-        }
-
-        public void InvokeActions()
-        {
-            foreach (var action in actions.ToArray())  // ToArray() を使用して安全に反復
-            {
-                action?.Invoke();
+                Action action = actions.Dequeue();
+                action.Invoke();
             }
         }
-
-        public bool RemoveSpecificAction(Action action)
-        {
-            return actions.Remove(action);
-        }
-
-        public void ClearAllActions()
-        {
-            actions.Clear();
-        }
-
-        public int ActionCount => actions.Count;
-
-        public bool HasActions => actions.Count > 0;
     }
 }
