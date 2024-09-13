@@ -11,6 +11,8 @@ namespace Code.Battle
     public class UIController : MonoBehaviour
     {
         [SerializeField] private UIView _uiView;
+        
+        [SerializeField] private PopUpView _popUpView;
 
         private DamagePointCreator _damagePointCreator;
         
@@ -94,7 +96,6 @@ namespace Code.Battle
             });
         }
         
-        
 
         public void SetMyGage(int point)
         {
@@ -110,6 +111,13 @@ namespace Code.Battle
         {
             _uiView.SetBubble(text);
         }
+
+        public void SetPopup()
+        {
+            _popUpView.Initialize();
+        }
+        
+        
     }
 }
 

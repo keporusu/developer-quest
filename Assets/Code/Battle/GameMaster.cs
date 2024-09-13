@@ -117,6 +117,7 @@ namespace Code.Battle
             _uiController.DialogueActivate();
 
             await UniTask.WaitUntil(() => _uiController.DialogueIndex == 2 && Input.GetMouseButtonDown(0));
+            _uiController.SetPopup();
             
         }
 

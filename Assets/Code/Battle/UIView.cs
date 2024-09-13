@@ -18,6 +18,8 @@ namespace Code.Battle
 
         [SerializeField] private TextMeshProUGUI _text;
 
+        
+
         public void SetMyGage(int point)
         {
             //_myGage.localScale = new Vector3(point / _maxCP,_myGage.localScale.y,_myGage.localScale.z);
@@ -34,7 +36,6 @@ namespace Code.Battle
         {
             _text.text = text;
         }
-        
         
         
     }
