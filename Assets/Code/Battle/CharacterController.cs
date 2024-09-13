@@ -25,6 +25,7 @@ namespace Code.Battle
         private bool _allow = true;
         private static readonly int Escape1 = Animator.StringToHash("Escape");
         private static readonly int JumpAttack = Animator.StringToHash("JumpAttack");
+        private static readonly int Slash = Animator.StringToHash("Slash");
         public bool Allow => _allow;
         
 
@@ -70,13 +71,16 @@ namespace Code.Battle
         {
             //bool isSpecificAnimPlaying = _animator.GetCurrentAnimatorStateInfo(0).IsName("SimpleAttack");
             //if (isSpecificAnimPlaying) return false; //失敗
-            var random = UnityEngine.Random.Range(0,2);
+            var random = UnityEngine.Random.Range(0,3);
             var res = _makeDelay();
 
             switch (random)
             {
                 case 0:
                     _animator.SetTrigger(JumpAttack);
+                    break;
+                case 1: 
+                    _animator.SetTrigger(Slash);
                     break;
                 default:
                     _animator.SetTrigger(SimpleAttack);
