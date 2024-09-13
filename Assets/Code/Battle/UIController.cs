@@ -63,7 +63,7 @@ namespace Code.Battle
         public void AdvanceDialogue()
         {
             //ダイアログが無効になっているなら会話を進められない
-            if(!_isDialogueActive)return;
+            if (!_isDialogueActive) return;
             _dialogueIndex = _dialogueManager.AdvanceDialogue();
             if (_dialogueIndex == 1) _isDialogueActive = false;
         }

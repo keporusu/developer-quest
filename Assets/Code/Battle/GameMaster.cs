@@ -115,8 +115,9 @@ namespace Code.Battle
             //TODO: ここに戦闘終了後の処理を書く
             attack.Dispose();
             _uiController.DialogueActivate();
-            
 
+            await UniTask.WaitUntil(() => _uiController.DialogueIndex == 2 && Input.GetMouseButtonDown(0));
+            
         }
 
 
