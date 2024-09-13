@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Code.Battle
 {
@@ -19,7 +20,8 @@ namespace Code.Battle
 
         public void SetMyGage(int point)
         {
-            _myGage.localScale = new Vector3(point / _maxCP,_myGage.localScale.y,_myGage.localScale.z);
+            //_myGage.localScale = new Vector3(point / _maxCP,_myGage.localScale.y,_myGage.localScale.z);
+            _myGage.DOScale(new Vector3(point / _maxCP, _myGage.localScale.y, _myGage.localScale.z), 0.8f).SetEase(Ease.OutExpo);
         }
 
         public void SetEnemyGage(int point)
