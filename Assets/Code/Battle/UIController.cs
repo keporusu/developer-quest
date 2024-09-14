@@ -114,7 +114,7 @@ namespace Code.Battle
 
         public void SetPopup()
         {
-            _popUpView.Initialize();
+            _popUpView.Activate();
         }
         
         
