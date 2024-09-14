@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Code.Menu;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -24,6 +25,10 @@ namespace Code.Battle
 
         private int _dialogueIndex = 0;
         public int DialogueIndex => _dialogueIndex;
+
+
+        private bool _isGBattleEnd = false;
+        public bool IsGBattleEnd => _isGBattleEnd;
         
         
         private void Start()
@@ -52,6 +57,9 @@ namespace Code.Battle
             _dialogueManager.CurrentDialogue
                 .Subscribe(dialogue => _uiView.SetBubble(dialogue))
                 .AddTo(this);
+
+            
+            _popUpView.OnPopUpEnd.Subscribe(_ => _isGBattleEnd=true);
 
         }
 
@@ -112,9 +120,14 @@ namespace Code.Battle
             _uiView.SetBubble(text);
         }
 
-        public void SetPopup()
+        public async UniTask SetPopup(int damage, int hp, int cp, int ex, int level)
         {
-            _popUpView.Activate();
+            await _popUpView.Activate();
+            _popUpView.SetDamage(damage);
+            _popUpView.SetHp(hp > 0 ? hp : 0);
+            _popUpView.SetCp(cp);
+            _popUpView.SetExperience(ex);
+            _popUpView.SetLevel(level);
         }
         
         

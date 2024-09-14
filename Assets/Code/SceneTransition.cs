@@ -20,6 +20,10 @@ namespace Code
         {
             SceneManager.LoadScene("Battle");
         }
+        public static void ToMenu()
+        {
+            SceneManager.LoadScene("Menu");
+        }
     
     
     }

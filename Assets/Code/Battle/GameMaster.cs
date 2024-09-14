@@ -17,6 +17,7 @@ namespace Code.Battle
 
         [SerializeField] private int _contributionPoint;
         [SerializeField] private int _enemyPoint;
+        private int _damage;
 
         async void Start()
         {
@@ -103,6 +104,7 @@ namespace Code.Battle
                     
                     var damage = decreasingStep * Random.Range(2f, 2.5f); // 0以上100未満の整数;
                     _enemyPoint -= (int)damage;
+                    _damage += (int)damage;
                     _uiController.ReadyDamage((int)damage,_enemyPoint);
                     
                     //TODO:もし連続で攻撃を入れたいなら、ここにforを使う
@@ -117,8 +119,12 @@ namespace Code.Battle
             _uiController.DialogueActivate();
 
             await UniTask.WaitUntil(() => _uiController.DialogueIndex == 2 && Input.GetMouseButtonDown(0));
-            _uiController.SetPopup();
+            await _uiController.SetPopup(_damage, _enemyPoint, _contributionPoint, 38024, 15);
             
+            await UniTask.WaitUntil(() => _uiController.IsGBattleEnd);
+            
+            
+            SceneTransition.ToMenu();
         }
 
 

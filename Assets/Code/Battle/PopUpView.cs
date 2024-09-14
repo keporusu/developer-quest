@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reactive.Subjects;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.PlayerLoop;
+using Unit = UniRx.Unit;
 
 namespace Code.Battle
 {
@@ -14,29 +18,45 @@ namespace Code.Battle
         [SerializeField] private TextMeshProUGUI _hpNum;
         [SerializeField] private TextMeshProUGUI _contributionNum;
         [SerializeField] private GameObject _experienceGage;
+        [SerializeField] private TextMeshProUGUI _experience;
+        [SerializeField] private TextMeshProUGUI _level;
         [SerializeField] private GameObject _levelGage;
         [SerializeField] private Button _okButton;
 
         [SerializeField] private int _maxExperience = 80000;
         [SerializeField] private int _maxLevel = 120;
 
+        public Subject<Unit> OnPopUpEnd { get; private set; }
+
+        private void Awake()
+        {
+            OnPopUpEnd = new Subject<Unit>();
+        }
+
         private void _initialize()
         {
-            _okButton.onClick.AddListener(_inActivate);
+            _okButton.onClick.AddListener(async ()=>
+            {
+                await _inActivate();
+                OnPopUpEnd.OnNext(Unit.Default);
+            });
         }
         
-        public void Activate()
+        public async UniTask Activate()
         {
             _initialize();
             gameObject.SetActive(true);
             gameObject.transform.localScale = Vector3.zero;
-            gameObject.transform.DOScale(new Vector3(0.0028f, 0.0028f, 0.0028f), 0.5f);
+            await gameObject.transform
+                .DOScale(new Vector3(0.0028f, 0.0028f, 0.0028f), 0.5f)
+                .AsyncWaitForCompletion();
         }
         
-        private void _inActivate()
+        private async UniTask _inActivate()
         {
             gameObject.transform.DOScale(Vector3.zero, 0.2f)
                 .OnComplete(()=>gameObject.SetActive(false));
+            await UniTask.Delay(TimeSpan.FromSeconds(1.0f));
         }
 
         public void SetHp(int hp)
@@ -57,10 +77,12 @@ namespace Code.Battle
         public void SetExperience(int ex)
         {
             _updateGage(ex, _maxExperience,_experienceGage);
+            _updateNum2(ex,_maxExperience,_experience);
         }
         public void SetLevel(int level)
         {
             _updateGage(level,_maxLevel,_levelGage);
+            _updateNum2(level, _maxLevel, _level);
         }
 
         private void _updateGage(int res, int max, GameObject gage)
@@ -80,7 +102,16 @@ namespace Code.Battle
                 }, res, 0.5f)
                 .SetEase(Ease.OutQuad);
         }
-        
+
+        private void _updateNum2(int res, int max, TextMeshProUGUI text)
+        {
+            DOTween.To(() => 0, x =>
+                {
+                    text.text = $"{x.ToString()} / {res.ToString()}";
+                }, res, 0.5f)
+                .SetEase(Ease.OutQuad);
+        }
+
     }
 
 }
