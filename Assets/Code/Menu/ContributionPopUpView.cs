@@ -9,6 +9,7 @@ using Cysharp.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
+//TODO: Viewのセルで初期値のContribution 2024-06-11 400 Contribution が反映されないようにしろ
 
 namespace Code.Menu
 {
