@@ -27,8 +27,8 @@ namespace Code.Battle
         public int DialogueIndex => _dialogueIndex;
 
 
-        private bool _isGBattleEnd = false;
-        public bool IsGBattleEnd => _isGBattleEnd;
+        private bool _isBattleEnd = false;
+        public bool IsBattleEnd => _isBattleEnd;
         
         
         private void Start()
@@ -59,7 +59,7 @@ namespace Code.Battle
                 .AddTo(this);
 
             
-            _popUpView.OnPopUpEnd.Subscribe(_ => _isGBattleEnd=true);
+            
 
         }
 
@@ -128,6 +128,7 @@ namespace Code.Battle
             _popUpView.SetCp(cp);
             _popUpView.SetExperience(ex);
             _popUpView.SetLevel(level);
+            _popUpView.OnPopUpEnd.Subscribe(_ => _isBattleEnd=true);
         }
         
         

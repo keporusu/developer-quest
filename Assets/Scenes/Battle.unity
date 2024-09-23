@@ -3442,9 +3442,9 @@ MonoBehaviour:
   _characterController: {fileID: 723749109}
   _uiController: {fileID: 165622431}
   _monsterManager: {fileID: 1785303125}
-  _contributionPoint: 3
-  _enemyPoint: 4
-  _isTest: 0
+  _contributionPoint: 63
+  _enemyPoint: 3810
+  _isTest: 1
 --- !u!114 &1454366729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4255,7 +4255,7 @@ PrefabInstance:
     - target: {fileID: 736802273121204985, guid: 8eda836cc73b67e4eba049a4335719bb,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3708941573325891789, guid: 8eda836cc73b67e4eba049a4335719bb,
         type: 3}

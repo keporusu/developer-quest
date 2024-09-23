@@ -19,6 +19,9 @@ namespace Code.Battle
         [SerializeField] private int _enemyPoint;
         private int _damage;
 
+        private int _lastContributionPoint;
+        private int _lastEnemyPoint;
+
         async void Start()
         {
             //最初のCPをセット
@@ -27,6 +30,9 @@ namespace Code.Battle
                 _contributionPoint = UserRepository.LoadContributionPoint();
                 _enemyPoint = UserRepository.LoadEnemyPoint();
             }
+            
+            _lastContributionPoint = _contributionPoint;
+            _lastEnemyPoint = _enemyPoint;
             
             
             _uiController.SetMyGage(_contributionPoint);
@@ -99,15 +105,16 @@ namespace Code.Battle
                 .Subscribe(_ =>
                 {
                     _characterController.Attack();
-                    _contributionPoint -= decreasingStep;
+                    var newDecreasingStep =
+                        _contributionPoint - decreasingStep < 0 ? _contributionPoint : decreasingStep;
+                    _contributionPoint -= newDecreasingStep;
                     _uiController.SetMyGage(_contributionPoint);
                     
-                    var damage = decreasingStep * Random.Range(2f, 2.5f); // 0以上100未満の整数;
+                    var damage = newDecreasingStep * Random.Range(2f, 2.5f); // 0以上100未満の整数;
                     _enemyPoint -= (int)damage;
                     _damage += (int)damage;
                     _uiController.ReadyDamage((int)damage,_enemyPoint);
                     
-                    //TODO:もし連続で攻撃を入れたいなら、ここにforを使う
                 })
                 .AddTo(this);
             
@@ -121,7 +128,7 @@ namespace Code.Battle
             await UniTask.WaitUntil(() => _uiController.DialogueIndex == 2 && Input.GetMouseButtonDown(0));
             await _uiController.SetPopup(_damage, _enemyPoint, _contributionPoint, 38024, 15);
             
-            await UniTask.WaitUntil(() => _uiController.IsGBattleEnd);
+            await UniTask.WaitUntil(() => _uiController.IsBattleEnd);
             
             
             SceneTransition.ToMenu();

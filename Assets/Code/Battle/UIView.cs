@@ -16,7 +16,7 @@ namespace Code.Battle
         private float _maxCP = 100f;
 
         [SerializeField] private RectTransform _enemyGage;
-        private float _maxEP = 100f;
+        private float _maxEP = 5000f;
 
         [SerializeField] private TextMeshProUGUI _text;
 
