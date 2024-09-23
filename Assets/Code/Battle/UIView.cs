@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -5,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 namespace Code.Battle
 {
@@ -18,7 +20,12 @@ namespace Code.Battle
 
         [SerializeField] private TextMeshProUGUI _text;
 
-        
+        private void Start()
+        {
+            SceneTransition.Initialize();
+            SceneTransition.Come();
+        }
+
 
         public void SetMyGage(int point)
         {

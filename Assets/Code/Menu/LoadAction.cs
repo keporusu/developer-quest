@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Code.Menu
@@ -14,6 +15,10 @@ namespace Code.Menu
         [SerializeField] private string endDayForDebug;
         void Start()
         {
+            SceneTransition.Initialize();
+            SceneTransition.Come();
+            
+            
             var dataHandler = new DataHandler();
             var uiController = GameObject.Find("UI").GetComponent<UIController>();
             var userPresenter = GameObject.Find("UserPresenter").GetComponent<UserPresenter>();
