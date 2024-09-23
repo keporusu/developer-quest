@@ -120,8 +120,7 @@ namespace Code.Battle
             
             //どちらかのゲージが尽きるまで戦闘が続く
             await UniTask.WaitUntil(() => _contributionPoint <= 0 || _enemyPoint <= 0);
-
-            //TODO: ここに戦闘終了後の処理を書く
+            
             attack.Dispose();
             _uiController.DialogueActivate();
 
@@ -131,6 +130,7 @@ namespace Code.Battle
             await UniTask.WaitUntil(() => _uiController.IsBattleEnd);
             
             
+            //TODO: メニューに帰る前に、ユーザーのレベルやら経験値やらを保存する
             SceneTransition.ToMenu();
         }
 
