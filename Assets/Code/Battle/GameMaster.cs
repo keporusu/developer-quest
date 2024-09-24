@@ -13,8 +13,10 @@ namespace Code.Battle
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private UIController _uiController;
         [SerializeField] private MonsterManager _monsterManager;
+        [SerializeField] private GameObject _battleField;
         private Mode _battleMode = Mode.PreBattle;
 
+        private EnemyInfo _enemyInfo;
         [SerializeField] private int _contributionPoint;
         [SerializeField] private int _enemyPoint;
         private int _damage;
@@ -29,6 +31,7 @@ namespace Code.Battle
             {
                 _contributionPoint = UserRepository.LoadContributionPoint();
                 _enemyPoint = UserRepository.LoadEnemyPoint();
+                _enemyInfo = EnemyList.GetEnemy(UserRepository.LoadEnemyName());
             }
             
             _lastContributionPoint = _contributionPoint;
@@ -38,8 +41,8 @@ namespace Code.Battle
             _uiController.SetMyGage(_contributionPoint);
             if (_enemyPoint <= 0)
             {
-                _monsterManager.CreateMonster();
-                _enemyPoint = 100;
+                _monsterManager.CreateMonster(_enemyInfo.GetModel());
+                _enemyPoint = _enemyInfo.Hp;
                 _uiController.SetEnemyGage(_enemyPoint);
             }
             else
@@ -125,6 +128,12 @@ namespace Code.Battle
             _uiController.DialogueActivate();
 
             await UniTask.WaitUntil(() => _uiController.DialogueIndex == 2 && Input.GetMouseButtonDown(0));
+
+            if (_enemyPoint <= 0)
+            {
+                
+            }
+            
             await _uiController.SetPopup(_damage, _enemyPoint, _contributionPoint, 38024, 15);
             
             await UniTask.WaitUntil(() => _uiController.IsBattleEnd);
