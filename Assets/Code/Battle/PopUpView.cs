@@ -59,57 +59,79 @@ namespace Code.Battle
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f));
         }
 
-        public void SetHp(int hp)
+        public void SetHp(int hp, bool anim = false)
         {
-            _updateNum(hp, _hpNum);
+            _updateNum(hp, _hpNum, anim);
         }
 
-        public void SetCp(int cp)
+        public void SetCp(int cp, bool anim = false)
         {
-            _updateNum(cp,_contributionNum);
+            _updateNum(cp,_contributionNum, anim);
         }
 
-        public void SetDamage(int damage)
+        public void SetDamage(int damage, bool anim = false)
         {
-            _updateNum(damage, _damageNum);
+            _updateNum(damage, _damageNum, anim);
         }
 
-        public void SetExperience(int ex)
+        public void SetExperience(int ex, bool anim = false)
         {
-            _updateGage(ex, _maxExperience,_experienceGage);
-            _updateNum2(ex,_maxExperience,_experience);
+            _updateGage(ex, _maxExperience,_experienceGage, anim);
+            _updateNum2(ex,_maxExperience,_experience, anim);
         }
-        public void SetLevel(int level)
+        public void SetLevel(int level, bool anim = false)
         {
-            _updateGage(level,_maxLevel,_levelGage);
-            _updateNum2(level, _maxLevel, _level);
+            _updateGage(level,_maxLevel,_levelGage, anim);
+            _updateNum2(level, _maxLevel, _level, anim);
         }
 
-        private void _updateGage(int res, int max, GameObject gage)
+        private void _updateGage(int res, int max, GameObject gage, bool anim = false)
         {
             var scale = gage.transform.localScale;
+            if (anim)
+            {
+                gage.transform.DOScale(new Vector3((float)res / max, scale.y, scale.z), 1.0f)
+                    .SetEase(Ease.OutQuad);
+                //else gage.transform.localScale = new Vector3((float)res / max,scale.y,scale.z);
+            }
+            else
+            {
+                gage.transform.localScale = new Vector3((float)res / max, scale.y, scale.z);
+            }
             
-            gage.transform.DOScale(new Vector3((float)res / max, scale.y, scale.z), 1.0f)
-                .SetEase(Ease.OutQuad);
-            //else gage.transform.localScale = new Vector3((float)res / max,scale.y,scale.z);
         }
 
-        private void _updateNum(int res, TextMeshProUGUI text)
+        private void _updateNum(int res, TextMeshProUGUI text, bool anim = false)
         {
-            DOTween.To(() => 0, x => 
-                {
-                    text.text = x.ToString();
-                }, res, 0.5f)
-                .SetEase(Ease.OutQuad);
+            if (anim)
+            {
+                DOTween.To(() => 0, x => 
+                    {
+                        text.text = x.ToString();
+                    }, res, 0.5f)
+                    .SetEase(Ease.OutQuad);
+            }
+            else
+            {
+                text.text = res.ToString();
+            }
         }
 
-        private void _updateNum2(int res, int max, TextMeshProUGUI text)
+        private void _updateNum2(int res, int max, TextMeshProUGUI text, bool anim = false)
         {
-            DOTween.To(() => 0, x =>
-                {
-                    text.text = $"{x.ToString()} / {res.ToString()}";
-                }, res, 0.5f)
-                .SetEase(Ease.OutQuad);
+            if (anim)
+            {
+                DOTween.To(() => 0, x =>
+                    {
+                        text.text = $"{x.ToString()} / {res.ToString()}";
+                    }, res, 0.5f)
+                    .SetEase(Ease.OutQuad);
+            }
+            else
+            {
+                text.text = res.ToString();
+            }
+            
         }
 
     }

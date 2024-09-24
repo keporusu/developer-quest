@@ -67,8 +67,12 @@ MonoBehaviour:
   _hpNum: {fileID: 1105715154132345655}
   _contributionNum: {fileID: 8185108950746006739}
   _experienceGage: {fileID: 9205319286193509946}
+  _experience: {fileID: 6453687125131599242}
+  _level: {fileID: 5174065237830875155}
   _levelGage: {fileID: 239903637564626830}
   _okButton: {fileID: 5026956276518325410}
+  _maxExperience: 80000
+  _maxLevel: 120
 --- !u!1 &1006080292389445626
 GameObject:
   m_ObjectHideFlags: 0

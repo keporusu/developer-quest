@@ -23,6 +23,7 @@ namespace Code.Battle
 
         private int _lastContributionPoint;
         private int _lastEnemyPoint;
+        private int _lastExperience;
 
         async void Start()
         {
@@ -49,6 +50,8 @@ namespace Code.Battle
             {
                 _uiController.SetEnemyGage(_enemyPoint);
             }
+
+            _lastExperience = UserRepository.LoadExperience();
             
             
             
@@ -133,11 +136,19 @@ namespace Code.Battle
             {
                 
             }
+
+            var experience = _lastExperience + 1000;
             
-            await _uiController.SetPopup(_damage, _enemyPoint, _contributionPoint, 38024, 15);
+            _uiController.SetPopUp(0, _lastEnemyPoint, _lastContributionPoint, _lastExperience, 15);
+            await _uiController.ActivatePopup();
+            _uiController.SetPopUpAnimation(_damage, _enemyPoint, _contributionPoint, experience, 15);
+            
             
             await UniTask.WaitUntil(() => _uiController.IsBattleEnd);
-            
+
+            UserRepository.SaveExperience(_lastExperience);
+            UserRepository.SaveContributionPoint(_contributionPoint);
+            UserRepository.SaveEnemyPoint(_enemyPoint);
             
             //TODO: メニューに帰る前に、ユーザーのレベルやら経験値やらを保存する
             SceneTransition.ToMenu();

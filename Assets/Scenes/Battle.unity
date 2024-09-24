@@ -3219,6 +3219,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8786719554347046938}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1137968769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6453687125131599242, guid: 8eda836cc73b67e4eba049a4335719bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2355501562303914795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1313255918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,6 +3454,7 @@ MonoBehaviour:
   _characterController: {fileID: 723749109}
   _uiController: {fileID: 165622431}
   _monsterManager: {fileID: 1785303125}
+  _battleField: {fileID: 0}
   _contributionPoint: 63
   _enemyPoint: 3810
   _isTest: 1
@@ -3657,6 +3670,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f4ec57b4e7170b469d7a393de748749, type: 3}
+--- !u!114 &1630023712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5174065237830875155, guid: 8eda836cc73b67e4eba049a4335719bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2355501562303914795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1662567782
 GameObject:
   m_ObjectHideFlags: 0
@@ -4257,6 +4282,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2150116419439727004, guid: 8eda836cc73b67e4eba049a4335719bb,
+        type: 3}
+      propertyPath: _level
+      value: 
+      objectReference: {fileID: 1630023712}
+    - target: {fileID: 2150116419439727004, guid: 8eda836cc73b67e4eba049a4335719bb,
+        type: 3}
+      propertyPath: _experience
+      value: 
+      objectReference: {fileID: 1137968769}
     - target: {fileID: 3708941573325891789, guid: 8eda836cc73b67e4eba049a4335719bb,
         type: 3}
       propertyPath: m_LocalScale.y

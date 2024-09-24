@@ -120,15 +120,29 @@ namespace Code.Battle
             _uiView.SetBubble(text);
         }
 
-        public async UniTask SetPopup(int damage, int hp, int cp, int ex, int level)
+
+        public void SetPopUp(int damage, int hp, int cp, int ex, int level)
         {
-            await _popUpView.Activate();
             _popUpView.SetDamage(damage);
             _popUpView.SetHp(hp > 0 ? hp : 0);
             _popUpView.SetCp(cp);
             _popUpView.SetExperience(ex);
             _popUpView.SetLevel(level);
+        }
+        
+        public void SetPopUpAnimation(int damage, int hp, int cp, int ex, int level)
+        {
+            _popUpView.SetDamage(damage, true);
+            _popUpView.SetHp(hp > 0 ? hp : 0, true);
+            _popUpView.SetCp(cp, true);
+            _popUpView.SetExperience(ex, true);
+            _popUpView.SetLevel(level, true);
             _popUpView.OnPopUpEnd.Subscribe(_ => _isBattleEnd=true);
+        }
+
+        public async UniTask ActivatePopup()
+        {
+            await _popUpView.Activate();
         }
         
         
